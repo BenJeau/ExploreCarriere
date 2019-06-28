@@ -1,0 +1,3 @@
+rootProject.name = 'SEG3525_ProjetUI'
+
+include ':app'
