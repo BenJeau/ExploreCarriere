@@ -1,16 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import { connect } from 'react-redux';
 
-export default class App extends Component {
+class App extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
       </View>
     );
   }
 }
+
+export default connect()(App);
 
 const styles = StyleSheet.create({
   container: {
@@ -23,10 +25,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
