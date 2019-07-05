@@ -27,7 +27,7 @@ class Search extends React.PureComponent {
                     onPress={() => console.log('Pressed')} />
                 <View style={styles.topSearch}>
                     <Touchable background={Touchable.Ripple('#90909040', false)}
-                        onPress={() => {this.props.navigation.navigate("JobNavigator")}}>
+                        onPress={() => {this.props.navigation.navigate("JobDetail")}}>
                         <View style={styles.topContent} >
                             <Text style={styles.text}>Rechercher un emploi</Text>
                             <MaterialIcons size={23} color="#000000" name='search' />

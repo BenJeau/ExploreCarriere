@@ -25,59 +25,11 @@ StatusBar.setTranslucent(true);
 StatusBar.setBarStyle('dark-content');
 
 
-const JobNavigator = createStackNavigator(
-	{
-		JobDetail: {
-			screen: JobDetail,
-			navigationOptions: {
-				title: 'Emploi'
-				// header: null
-			},
-		},
-		Availabilities: {
-			screen: Availabilities,
-			navigationOptions: {
-				title: 'Disponibilités'
-				// header: null
-			},
-		},
-		Payment: {
-			screen: Payment,
-			navigationOptions: {
-				title: 'Paiement'
-				// header: null
-			},
-		},
-		Summary: {
-			screen: Summary,
-			navigationOptions: {
-				title: 'Sommaire'
-				// header: null
-			},
-		},
-	},
-	{
-		initialRouteName: 'JobDetail',
-		defaultNavigationOptions: {
-			headerTransparent: true,
-			headerTintColor: '#000',
-			headerStyle: {
-				elevation: 0,
-				shadowOpacity: 0,
-				borderBottomWidth: 0,
-				marginTop: getStatusBarHeight(),
-				backgroundColor: '#ffffffd0'
-			}
-		}
-	}
-)
-
 const DashboardNavigator = createMaterialBottomTabNavigator(
 	{
 		Search: {
 			screen: Search,
 			navigationOptions: {
-				header: null,
 				title: 'Recherche',
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons color={tintColor} size={23} name='search' />
@@ -87,7 +39,6 @@ const DashboardNavigator = createMaterialBottomTabNavigator(
 		AppliedJobs: {
 			screen: AppliedJobs,
 			navigationOptions: {
-				header: null,
 				title: 'Emplois postulés',
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons color={tintColor} size={23} name='list' />
@@ -97,7 +48,6 @@ const DashboardNavigator = createMaterialBottomTabNavigator(
 		Settings: {
 			screen: Settings,
 			navigationOptions: {
-				header: null,
 				title: 'Paramètres',
 				tabBarIcon: ({ tintColor }) => (
 					<MaterialIcons color={tintColor} size={23} name='settings' />
@@ -113,21 +63,79 @@ const DashboardNavigator = createMaterialBottomTabNavigator(
 			outline: 'none'
 		},
 		shifting: true,
+		defaultNavigationOptions: {
+			header: null,
+		}
 	}
 );
+
+
+
+const JobNavigator = createStackNavigator(
+	{	
+		DashboardNavigator,
+		JobDetail: {
+			screen: JobDetail,
+			navigationOptions: {
+				title: 'Emploi'
+			},
+		},
+		Availabilities: {
+			screen: Availabilities,
+			navigationOptions: {
+				title: 'Disponibilités'
+			},
+		},
+		Payment: {
+			screen: Payment,
+			navigationOptions: {
+				title: 'Paiement'
+			},
+		},
+		Summary: {
+			screen: Summary,
+			navigationOptions: {
+				title: 'Sommaire'
+			},
+		},
+	},
+	{
+		initialRouteName: 'DashboardNavigator',
+		defaultNavigationOptions: {
+			headerTransparent: true,
+			headerTintColor: '#000',
+			headerStyle: {
+				elevation: 0,
+				shadowOpacity: 0,
+				borderBottomWidth: 0,
+				marginTop: getStatusBarHeight(),
+				// backgroundColor: '#ffffffd0'
+			}
+		}
+	}
+)
 
 const LoginNavigator = createStackNavigator(
 	{
 		Login: {
 			screen: Login,
 			navigationOptions: {
-				// header: null
+				header: null
 			},
 		},
 		Signup: {
 			screen: Signup,
 			navigationOptions: {
-				// header: null
+				title: 'Enregistrement',
+				headerTransparent: true,
+				headerTintColor: '#000',
+				headerStyle: {
+					elevation: 0,
+					shadowOpacity: 0,
+					borderBottomWidth: 0,
+					marginTop: getStatusBarHeight(),
+					backgroundColor: '#ffffffd0'
+				}
 			},
 		}
 	},
