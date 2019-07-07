@@ -65,7 +65,8 @@ const DashboardNavigator = createMaterialBottomTabNavigator(
 		shifting: true,
 		defaultNavigationOptions: {
 			header: null,
-		}
+		},
+		keyboardHidesNavigationBar: true
 	}
 );
 
