@@ -62,7 +62,7 @@
 		6E445134BE3A4F1CB882359A /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34FC7E5F00A546FBAB78E917 /* libRNGestureHandler.a */; };
 		FB94CEDDFE844DB1B0444794 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FD1785137F492B890FAF4D /* libRNGestureHandler-tvOS.a */; };
 		6A4026CEC3F04FFE8B663658 /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6449800CDB2844A999D3AC5D /* libRNCAsyncStorage.a */; };
-		BD73E06E11F94EADBD09B49B /* libRNCGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24608E214DFB42998577E79D /* libRNCGeolocation.a */; };
+		3479C9D57D914631BC443ACA /* libRNCGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1A520DFE20446AA2B19596 /* libRNCGeolocation.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -398,8 +398,8 @@
 		97FD1785137F492B890FAF4D /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F61BE8DDD10041ABAB5C6760 /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNCAsyncStorage.xcodeproj"; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		6449800CDB2844A999D3AC5D /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; name = "libRNCAsyncStorage.a"; path = "libRNCAsyncStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		4F0DC3C4F1D84C71B2BF3EF6 /* RNCGeolocation.xcodeproj */ = {isa = PBXFileReference; name = "RNCGeolocation.xcodeproj"; path = "../node_modules/@react-native-community/geolocation/ios/RNCGeolocation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		24608E214DFB42998577E79D /* libRNCGeolocation.a */ = {isa = PBXFileReference; name = "libRNCGeolocation.a"; path = "libRNCGeolocation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		334F1747CCB8444388FF8684 /* RNCGeolocation.xcodeproj */ = {isa = PBXFileReference; name = "RNCGeolocation.xcodeproj"; path = "../node_modules/@react-native-community/geolocation/ios/RNCGeolocation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7C1A520DFE20446AA2B19596 /* libRNCGeolocation.a */ = {isa = PBXFileReference; name = "libRNCGeolocation.a"; path = "libRNCGeolocation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -433,7 +433,7 @@
 				581C3AE4E95A4986A12B5741 /* libAirMaps.a in Frameworks */,
 				6E445134BE3A4F1CB882359A /* libRNGestureHandler.a in Frameworks */,
 				6A4026CEC3F04FFE8B663658 /* libRNCAsyncStorage.a in Frameworks */,
-				BD73E06E11F94EADBD09B49B /* libRNCGeolocation.a in Frameworks */,
+				3479C9D57D914631BC443ACA /* libRNCGeolocation.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +631,7 @@
 				BE09933C02AF4A8AB48E7BA8 /* AirMaps.xcodeproj */,
 				1C1666341FC44CA1B9C63FDA /* RNGestureHandler.xcodeproj */,
 				F61BE8DDD10041ABAB5C6760 /* RNCAsyncStorage.xcodeproj */,
-				4F0DC3C4F1D84C71B2BF3EF6 /* RNCGeolocation.xcodeproj */,
+				334F1747CCB8444388FF8684 /* RNCGeolocation.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";

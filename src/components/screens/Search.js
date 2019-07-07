@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, Platform, StatusBar, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Image, Platform, Picker, StatusBar, TextInput, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
@@ -8,6 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { FAB, Button, Dialog, Portal } from 'react-native-paper';
 import Touchable from 'react-native-platform-touchable';
 import Geolocation from '@react-native-community/geolocation';
+// import DateTimePicker from '@react-native-community/datetimepicker';
 
 const coorData = [
     {
@@ -39,7 +40,8 @@ class Search extends React.PureComponent {
 
         this.state = {
             modalVisible: false,
-            query: ""
+            query: "",
+            showDatePicker: false
         }
     }
     componentDidMount() {
@@ -62,7 +64,7 @@ class Search extends React.PureComponent {
     }
 
     render() {
-        const { modalVisible, query } = this.state;
+        const { modalVisible, query, showDatePicker } = this.state;
 
         return (
             <View style={styles.container}>
@@ -71,6 +73,7 @@ class Search extends React.PureComponent {
                     showsCompass={false}
                     showsMyLocationButton={false}
                     ref={i => this.map = i}
+                    on
                     initialRegion={{
                         latitude: 45.422540,
                         longitude: -75.682979,
@@ -114,9 +117,38 @@ class Search extends React.PureComponent {
                         <Dialog.Title style={{ color: '#c74b4b' }}>Filtrer les emplois</Dialog.Title>
                         <Dialog.Content>
                             <View style={{}}>
-                                <Text>Domaine</Text>
-                                <Text>Durée</Text>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <Text>Domaine</Text>
+                                    <Picker
+                                        selectedValue={this.state.language}
+                                        style={{ height: 50, width: 200 }}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            this.setState({ language: itemValue })
+                                        }>
+                                        {
+                                            dropdownData.field.map((i, key) => (
+                                                <Picker.Item {...i} key={key} />
+                                            ))
+                                        }
+                                    </Picker>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <Text>Durée</Text>
+                                    <Picker
+                                        selectedValue={this.state.language}
+                                        style={{ height: 50, width: 200 }}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            this.setState({ language: itemValue })
+                                        }>
+                                        {
+                                            dropdownData.length.map((i, key) => (
+                                                <Picker.Item {...i} key={key} />
+                                            ))
+                                        }
+                                    </Picker>
+                                </View>
                                 <Text>Dates</Text>
+                                <Button onPress={() => this.setState({showDatePicker: true})}>Show</Button>
                             </View>
                         </Dialog.Content>
                         <Dialog.Actions>
@@ -125,9 +157,68 @@ class Search extends React.PureComponent {
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
+
+                {/* { <DateTimePicker value={new Date()}
+                    is24Hour={false} />
+        } */}
             </View>
         );
     }
+}
+
+const dropdownData = {
+    field: [
+        {
+            label: 'Tout', 
+            value: 'all'
+        },
+        {
+            label: 'Administration', 
+            value: 'admin'
+        },
+        {
+            label: 'Programmation', 
+            value: 'prog'
+        },
+        {
+            label: 'Éducation', 
+            value: 'edu'
+        },
+        {
+            label: 'Sciences', 
+            value: 'sci'
+        },
+        {
+            label: 'Musique', 
+            value: 'musi'
+        },
+    ],
+    length: [
+        {
+            label: '1 journée', 
+            value: '1d'
+        },
+        {
+            label: '2 journées', 
+            value: '2d'
+        },
+        {
+            label: '3 journées', 
+            value: '3d'
+        },
+        {
+            label: '4 journées', 
+            value: '4d'
+        },
+        {
+            label: '5 journées', 
+            value: '5d'
+        },
+        {
+            label: '1 semaine', 
+            value: '1s'
+        },
+    ],
 }
 
 export default connect()(Search);
