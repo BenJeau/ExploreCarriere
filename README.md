@@ -21,16 +21,18 @@ Tout le code important pour nous se retrouve dans le dossier `src` et dans le fi
 ### Structure du dossier `src`
 
 * `src/components`
-  * Contient tout les components (soit écrans ou composantes d'un écran)
+  * Contient tout les components utilisé entres écrans
+  * `screens`
+    * Contient les components des écrans
 * `src/data`
   * Contient tout les fichier de données, tels que ceux JSON
 * `src/redux`
   * Contient les documents associés à la gestion de la base de donnée du client
-  * `src/redux/actions`
+  * `actions`
     * Contient les actions que tu peux accomplir sur la base de donnée
-  * `src/redux/reducers`
+  * `reducers`
     * Accomplie les opérations des actions sur la base de donnée
-  * `src/redux/store`
+  * `store`
     * Contient la spécification de la base de donnée
 
 ## Création de components
