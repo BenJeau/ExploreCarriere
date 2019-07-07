@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text, Image, Platform, Picker, StatusBar, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Picker, TextInput, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
@@ -8,18 +8,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { FAB, Button, Dialog, Portal } from 'react-native-paper';
 import Touchable from 'react-native-platform-touchable';
 import Geolocation from '@react-native-community/geolocation';
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "react-native-modal-datetime-picker";
+import emplois from '../../data/emplois';
 
-const coorData = [
-    {
-        jobTitle: 'Wow',
-        companyTitle: 'Its working now!',
-        latlng: {
-            latitude: 45.425871,
-            longitude: -75.682337
-        }
-    }
-]
+var moment = require('moment');
+import 'moment/locale/fr';
 
 class Popover extends React.PureComponent {
     render() {
@@ -33,17 +26,23 @@ class Popover extends React.PureComponent {
     }
 }
 
-
 class Search extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        moment.locale('fr');
+
         this.state = {
             modalVisible: false,
             query: "",
-            showDatePicker: false
+            showDatePicker: false,
+            isDateTimePickerVisibleStart: false,
+            isDateTimePickerVisibleEnd: false,
+            startDate: null,
+            endDate: null,
         }
     }
+
     componentDidMount() {
         setTimeout(() =>
             Geolocation.getCurrentPosition(info => this.map.animateToRegion({
@@ -63,8 +62,34 @@ class Search extends React.PureComponent {
         this.setState({ modalVisible: false });
     }
 
+    hideDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisibleStart: false, isDateTimePickerVisibleEnd: false });
+    };
+
+    handleDatePicked = date => {
+        if (this.state.isDateTimePickerVisibleStart) {
+            this.setState({ startDate: date });
+        } else {
+            this.setState({ endDate: date });
+        }
+        this.hideDateTimePicker();
+    };
+
+    showDateTimePickerEnd = () => {
+        this.setState({ isDateTimePickerVisibleEnd: true })
+    }
+
+    showDateTimePickerStart = () => {
+        this.setState({ isDateTimePickerVisibleStart: true })
+    }
+
+    // https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+    capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     render() {
-        const { modalVisible, query, showDatePicker } = this.state;
+        const { modalVisible, query, isDateTimePickerVisibleStart, isDateTimePickerVisibleEnd, startDate, endDate } = this.state;
 
         return (
             <View style={styles.container}>
@@ -73,7 +98,6 @@ class Search extends React.PureComponent {
                     showsCompass={false}
                     showsMyLocationButton={false}
                     ref={i => this.map = i}
-                    on
                     initialRegion={{
                         latitude: 45.422540,
                         longitude: -75.682979,
@@ -81,7 +105,9 @@ class Search extends React.PureComponent {
                         longitudeDelta: 0.0021,
                     }}>
                     {
-                        coorData.filter(i => i.jobTitle.toLowerCase().includes(query.toLowerCase()) || i.companyTitle.toLowerCase().includes(query.toLowerCase())).map((marker, key) =>
+                        emplois.filter(i => {
+                            return i.jobTitle.toLowerCase().includes(query.toLowerCase()) || i.companyTitle.toLowerCase().includes(query.toLowerCase())
+                        }).map((marker, key) =>
                             <Marker key={key}
                                 coordinate={marker.latlng}>
                                 <Callout tooltip
@@ -94,18 +120,26 @@ class Search extends React.PureComponent {
                 </MapView>
 
                 <FAB style={styles.fab}
+                    onPress={this.showModal}
                     icon={({ size, color }) => (
-                        <MaterialCommunityIcons size={size} color={color} name="filter" />
-                    )}
-                    onPress={this.showModal} />
+                        <MaterialCommunityIcons size={size}
+                            color={color}
+                            name="filter" />
+                    )} />
 
                 <View style={styles.topSearch}>
-
-                    <Touchable background={Touchable.Ripple('#90909040', false)} onPress={() => this.searchInput.isFocused() ? this.searchInput.blur() : this.searchInput.focus()}>
+                    <Touchable background={Touchable.Ripple('#90909040', false)}
+                        onPress={() => this.searchInput.isFocused() ? this.searchInput.blur() : this.searchInput.focus()}>
                         <View style={styles.topContent} >
-                            <TextInput ref={i => this.searchInput = i} style={styles.text} placeholder="Rechercher un emploi" onChangeText={(query) => this.setState({ query })}
+                            <TextInput ref={i => this.searchInput = i}
+                                style={styles.text}
+                                placeholder="Rechercher un emploi"
+                                onChangeText={(query) => this.setState({ query })}
                                 value={query} />
-                            <MaterialIcons size={23} color="#000000" name='search' />
+
+                            <MaterialIcons size={23}
+                                color="#000000"
+                                name='search' />
                         </View>
                     </Touchable>
                 </View>
@@ -115,40 +149,74 @@ class Search extends React.PureComponent {
                         visible={modalVisible}
                         onDismiss={this.dismissModal}>
                         <Dialog.Title style={{ color: '#c74b4b' }}>Filtrer les emplois</Dialog.Title>
+
                         <Dialog.Content>
-                            <View style={{}}>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                    <Text>Domaine</Text>
-                                    <Picker
-                                        selectedValue={this.state.language}
-                                        style={{ height: 50, width: 200 }}
-                                        onValueChange={(itemValue, itemIndex) =>
-                                            this.setState({ language: itemValue })
-                                        }>
-                                        {
-                                            dropdownData.field.map((i, key) => (
-                                                <Picker.Item {...i} key={key} />
-                                            ))
-                                        }
-                                    </Picker>
-                                </View>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                    <Text>Durée</Text>
-                                    <Picker
-                                        selectedValue={this.state.language}
-                                        style={{ height: 50, width: 200 }}
-                                        onValueChange={(itemValue, itemIndex) =>
-                                            this.setState({ language: itemValue })
-                                        }>
-                                        {
-                                            dropdownData.length.map((i, key) => (
-                                                <Picker.Item {...i} key={key} />
-                                            ))
-                                        }
-                                    </Picker>
-                                </View>
+                            <View style={styles.dialogSubSection}>
+                                <Text>Domaine</Text>
+                                <Picker selectedValue={this.state.field}
+                                    style={styles.picker}
+                                    onValueChange={field => this.setState({ field })}>
+                                    {
+                                        dropdownData.field.map((i, key) => (
+                                            <Picker.Item {...i} key={key} />
+                                        ))
+                                    }
+                                </Picker>
+                            </View>
+
+                            <View style={styles.dialogSubSection}>
+                                <Text>Durée</Text>
+                                <Picker selectedValue={this.state.jobLength}
+                                    style={styles.picker}
+                                    onValueChange={jobLength => this.setState({ jobLength })}>
+                                    {
+                                        dropdownData.length.map((i, key) => (
+                                            <Picker.Item {...i} key={key} />
+                                        ))
+                                    }
+                                </Picker>
+                            </View>
+
+                            <View style={styles.dates}>
                                 <Text>Dates</Text>
-                                <Button onPress={() => this.setState({showDatePicker: true})}>Show</Button>
+
+                                <View>
+                                    <View style={{ paddingBottom: 15 }}>
+                                        <Text>Début</Text>
+
+                                        <View style={styles.dateContent}>
+                                            <Text onPress={this.showDateTimePickerStart} 
+                                                style={styles.dateText}>
+                                                {startDate ? this.capitalizeFirstLetter(moment(startDate).format("dddd Do MMMM YYYY")) : 'Selectionner date'}
+                                            </Text>
+
+                                            <Touchable onPress={this.showDateTimePickerStart} 
+                                                background={Touchable.SelectableBackgroundBorderless()}>
+                                                <MaterialIcons name="arrow-drop-down" 
+                                                    size={23} 
+                                                    color="#787878" />
+                                            </Touchable>
+                                        </View>
+                                    </View>
+
+                                    <View>
+                                        <Text>Fin</Text>
+
+                                        <View style={styles.dateContent}>
+                                            <Text onPress={this.showDateTimePickerEnd} 
+                                                style={styles.dateText}>
+                                                {endDate ? this.capitalizeFirstLetter(moment(endDate).format("dddd Do MMMM YYYY")) : 'Selectionner date'}
+                                            </Text>
+
+                                            <Touchable onPress={this.showDateTimePickerEnd} 
+                                                background={Touchable.SelectableBackgroundBorderless()}>
+                                                <MaterialIcons name="arrow-drop-down" 
+                                                    size={23} 
+                                                    color="#787878" />
+                                            </Touchable>
+                                        </View>
+                                    </View>
+                                </View>
                             </View>
                         </Dialog.Content>
                         <Dialog.Actions>
@@ -158,67 +226,14 @@ class Search extends React.PureComponent {
                     </Dialog>
                 </Portal>
 
-                {/* { <DateTimePicker value={new Date()}
-                    is24Hour={false} />
-        } */}
+                <DateTimePicker isVisible={isDateTimePickerVisibleStart || isDateTimePickerVisibleEnd}
+                    minimumDate={new Date()}
+                    date={isDateTimePickerVisibleStart && startDate ? startDate : (isDateTimePickerVisibleEnd && endDate ? endDate : new Date())}
+                    onConfirm={this.handleDatePicked}
+                    onCancel={this.hideDateTimePicker} />
             </View>
         );
     }
-}
-
-const dropdownData = {
-    field: [
-        {
-            label: 'Tout', 
-            value: 'all'
-        },
-        {
-            label: 'Administration', 
-            value: 'admin'
-        },
-        {
-            label: 'Programmation', 
-            value: 'prog'
-        },
-        {
-            label: 'Éducation', 
-            value: 'edu'
-        },
-        {
-            label: 'Sciences', 
-            value: 'sci'
-        },
-        {
-            label: 'Musique', 
-            value: 'musi'
-        },
-    ],
-    length: [
-        {
-            label: '1 journée', 
-            value: '1d'
-        },
-        {
-            label: '2 journées', 
-            value: '2d'
-        },
-        {
-            label: '3 journées', 
-            value: '3d'
-        },
-        {
-            label: '4 journées', 
-            value: '4d'
-        },
-        {
-            label: '5 journées', 
-            value: '5d'
-        },
-        {
-            label: '1 semaine', 
-            value: '1s'
-        },
-    ],
 }
 
 export default connect()(Search);
@@ -253,6 +268,86 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         marginHorizontal: 20,
-        height: '100%'
+        height: '100%',
+    },
+    dialogSubSection: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    picker: {
+        height: 50,
+        width: 220,
+    },
+    dates: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingRight: 13,
+        marginTop: 15,
+    },
+    dateContent: {
+        flexDirection: 'row', 
+        width: 200, 
+        justifyContent: 'space-between', 
+        paddingTop: 5,
+    },
+    dateText: {
+        color: 'black', 
+        fontSize: 15,
     }
 });
+
+const dropdownData = {
+    field: [
+        {
+            label: 'Tout',
+            value: 'all'
+        },
+        {
+            label: 'Administration',
+            value: 'admin'
+        },
+        {
+            label: 'Programmation',
+            value: 'prog'
+        },
+        {
+            label: 'Éducation',
+            value: 'edu'
+        },
+        {
+            label: 'Sciences',
+            value: 'sci'
+        },
+        {
+            label: 'Musique',
+            value: 'musi'
+        },
+    ],
+    length: [
+        {
+            label: '1 journée',
+            value: '1d'
+        },
+        {
+            label: '2 journées',
+            value: '2d'
+        },
+        {
+            label: '3 journées',
+            value: '3d'
+        },
+        {
+            label: '4 journées',
+            value: '4d'
+        },
+        {
+            label: '5 journées',
+            value: '5d'
+        },
+        {
+            label: '1 semaine',
+            value: '1s'
+        },
+    ],
+}

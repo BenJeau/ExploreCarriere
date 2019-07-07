@@ -4364,6 +4364,11 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 morgan@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
@@ -5145,7 +5150,15 @@ react-native-maps@^0.24.2:
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
   integrity sha512-1iNIDikp2dkCG+8DguaEviYZiMSYyvwqYT7pO2YTZvuFRDSc/P9jXMhTUnSh4wNDlEeQ47OJ09l0pwWVBZ7wxg==
 
-react-native-modal@^11.1.0:
+react-native-modal-datetime-picker@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-7.5.0.tgz#415f02e29eedf283035867ae65d2e609af738abf"
+  integrity sha512-TtFS27IGhtg89LnIYIa8FrpNWbQENLiAAdfJPDdskv5VqIKgZSA0toOFYaAMRLeMiB8Urpf2/sAf0rdooCzu+g==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-modal "^11.0.2"
+
+react-native-modal@^11.0.2, react-native-modal@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.1.0.tgz#7dcb4be8e535b7ee3cc3b3c017e7a32ec0e1b278"
   integrity sha512-gSD21evs2m+C/vtRS+R/I1ZuIN5td+K+I9Dt04HpBzux3HyA9km2oonQy8t+EKUNN2rFYjFntfUOMmb3vj7i8A==
