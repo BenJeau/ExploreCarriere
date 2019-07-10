@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Text, Picker, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Picker, TextInput, Keyboard, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
@@ -44,6 +44,9 @@ class Search extends React.PureComponent {
     }
 
     componentDidMount() {
+        this.props.navigation.addListener('willFocus', () => {
+            StatusBar.setBackgroundColor("transparent");
+        });
         setTimeout(() =>
             Geolocation.getCurrentPosition(info => this.map.animateToRegion({
                 latitude: info.coords.latitude,
@@ -185,15 +188,15 @@ class Search extends React.PureComponent {
                                         <Text>Début</Text>
 
                                         <View style={styles.dateContent}>
-                                            <Text onPress={this.showDateTimePickerStart} 
+                                            <Text onPress={this.showDateTimePickerStart}
                                                 style={styles.dateText}>
                                                 {startDate ? this.capitalizeFirstLetter(moment(startDate).format("dddd Do MMMM YYYY")) : 'Selectionner date'}
                                             </Text>
 
-                                            <Touchable onPress={this.showDateTimePickerStart} 
+                                            <Touchable onPress={this.showDateTimePickerStart}
                                                 background={Touchable.SelectableBackgroundBorderless()}>
-                                                <MaterialIcons name="arrow-drop-down" 
-                                                    size={23} 
+                                                <MaterialIcons name="arrow-drop-down"
+                                                    size={23}
                                                     color="#787878" />
                                             </Touchable>
                                         </View>
@@ -203,15 +206,15 @@ class Search extends React.PureComponent {
                                         <Text>Fin</Text>
 
                                         <View style={styles.dateContent}>
-                                            <Text onPress={this.showDateTimePickerEnd} 
+                                            <Text onPress={this.showDateTimePickerEnd}
                                                 style={styles.dateText}>
                                                 {endDate ? this.capitalizeFirstLetter(moment(endDate).format("dddd Do MMMM YYYY")) : 'Selectionner date'}
                                             </Text>
 
-                                            <Touchable onPress={this.showDateTimePickerEnd} 
+                                            <Touchable onPress={this.showDateTimePickerEnd}
                                                 background={Touchable.SelectableBackgroundBorderless()}>
-                                                <MaterialIcons name="arrow-drop-down" 
-                                                    size={23} 
+                                                <MaterialIcons name="arrow-drop-down"
+                                                    size={23}
                                                     color="#787878" />
                                             </Touchable>
                                         </View>
@@ -286,13 +289,13 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     dateContent: {
-        flexDirection: 'row', 
-        width: 200, 
-        justifyContent: 'space-between', 
+        flexDirection: 'row',
+        width: 200,
+        justifyContent: 'space-between',
         paddingTop: 5,
     },
     dateText: {
-        color: 'black', 
+        color: 'black',
         fontSize: 15,
     }
 });
