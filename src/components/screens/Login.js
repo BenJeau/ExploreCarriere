@@ -1,20 +1,39 @@
 import React from 'react';
 import {StyleSheet, View, Image, Dimensions, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
-import {Button, Headline, Title, TextInput} from 'react-native-paper';
+import {Button, Headline, Title, TextInput, HelperText} from 'react-native-paper';
 
 class Login extends React.PureComponent {
   constructor() {
     super();
+    console.log("constructed");
     this.state =
       {
-        hidePassword: true
+        hidePassword: true,
+        email : "",
+        password : "",
+        validEmail : false,
+        validPassword : false,
+        canProceed : false
       }
   }
 
   managePasswordVisibility = () => {
     this.setState({ hidePassword: !this.state.hidePassword });
+    console.log("was called");
+  };
+
+  updateCanProceed = () => {
+    this.setState({canProceed: this.state.validPassword && this.state.validEmail});
   }
+
+  validatePassword = (password) => {
+    this.setState({validPassword: password.length > 5, password: password}, this.updateCanProceed);
+  };
+
+  validateEmail = (email) => {
+    this.setState({validEmail : /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email), email: email}, this.updateCanProceed);
+  };
 
   render() {
     return (
@@ -27,28 +46,48 @@ class Login extends React.PureComponent {
         <Headline style={styles.headlineStyling}>Exploration de carrière</Headline>
         <Title style={styles.subtitleStyle}>Découvrez votre carrière</Title>
 
-        <TextInput
-            style={styles.input}
-            label='Courriel'
-            mode='outlined'
-        />
+        <View>
+          <TextInput
+              style={styles.input}
+              label='Courriel'
+              mode='outlined'
+              value={this.state.email}
+              error={!this.state.validEmail}
+              onChangeText={(input) => this.validateEmail(input)}
+          />
+          <HelperText
+            type="error"
+            visible={!this.state.validEmail}
+          >Format invalide de courriel
+          </HelperText>
+        </View>
 
         <View>
           <TextInput
               style={styles.input}
               label='Mot de passe'
               mode='outlined'
+              value={this.state.password}
               secureTextEntry={this.state.hidePassword}
+              error={!this.state.validPassword}
+              onChangeText={(input) => this.validatePassword(input)}
           />
-          <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = { this.managePasswordVisibility }>
+          <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = {this.managePasswordVisibility }>
             <Image source = { ( this.state.hidePassword ) ? require('../../assets/hide.png') : require('../../assets/view.png') } style = { styles.btnImage } />
           </TouchableOpacity>
+          <HelperText
+            type="error"
+            visible={!this.state.validPassword}
+          >
+            Doit contenir 6 caractères ou plus
+          </HelperText>
         </View>
 
         <View style={styles.buttonPanelView}>
           <Button style={styles.logIn}
             mode = 'contained'
             dark = {true}
+            disabled = {!this.state.canProceed}
             onPress={() => this.props.navigation.navigate("DashboardNavigator")}
           >
             S'authentifier
@@ -66,12 +105,6 @@ class Login extends React.PureComponent {
 
           </View>
         </View>
-        {
-          /*
-          <Button onPress={() => this.props.navigation.navigate("DashboardNavigator")}>Search</Button>
-          <Button onPress={() => this.props.navigation.navigate("Signup")}>Signup</Button>
-          */
-        }
       </View>
     );
   }
@@ -138,7 +171,8 @@ const styles = StyleSheet.create({
     height: 30,
     width: 25,
     right: 20,
-    top: 22
+    top: 22,
+    zIndex: 1
   },
   btnImage:
   {
