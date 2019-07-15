@@ -6,7 +6,6 @@ import {Button, Headline, Title, TextInput, HelperText} from 'react-native-paper
 class Login extends React.PureComponent {
   constructor() {
     super();
-    console.log("constructed");
     this.state =
       {
         hidePassword: true,
@@ -20,7 +19,6 @@ class Login extends React.PureComponent {
 
   managePasswordVisibility = () => {
     this.setState({ hidePassword: !this.state.hidePassword });
-    console.log("was called");
   };
 
   updateCanProceed = () => {
@@ -57,7 +55,7 @@ class Login extends React.PureComponent {
           />
           <HelperText
             type="error"
-            visible={!this.state.validEmail}
+            visible={!this.state.validEmail && this.state.email.length !== 0}
           >Format invalide de courriel
           </HelperText>
         </View>
@@ -77,7 +75,7 @@ class Login extends React.PureComponent {
           </TouchableOpacity>
           <HelperText
             type="error"
-            visible={!this.state.validPassword}
+            visible={!this.state.validPassword && this.state.password.length !== 0}
           >
             Doit contenir 6 caractères ou plus
           </HelperText>

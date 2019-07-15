@@ -72,7 +72,7 @@ class Signup extends React.PureComponent {
             />
             <HelperText
               type="error"
-              visible={!this.state.validName}
+              visible={!this.state.validName && this.state.name.length !== 0}
             >Nom doit être non-vide
             </HelperText>
 
@@ -87,7 +87,7 @@ class Signup extends React.PureComponent {
             />
             <HelperText
               type="error"
-              visible={!this.state.validEmail}
+              visible={!this.state.validEmail && this.state.email.length !== 0}
             >Format invalide de courriel
             </HelperText>
 
@@ -104,7 +104,7 @@ class Signup extends React.PureComponent {
               />
               <HelperText
                 type="error"
-                visible={!this.state.validPassword}
+                visible={!this.state.validPassword && this.state.password.length !== 0}
               >Doit contenir 6 caractères ou plus
               </HelperText>
 
@@ -125,7 +125,7 @@ class Signup extends React.PureComponent {
               />
               <HelperText
                 type="error"
-                visible={!this.state.validPasswordVerification}
+                visible={!this.state.validPasswordVerification && this.state.passwordVerification.length !== 0}
               >Doit correspondre au mot de passe entré
               </HelperText>
 
@@ -164,8 +164,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   bannerImage: {
-    width: "80%",
-    height: 200
+    width: "70%",
+    height: 125,
+    marginTop: 100
   },
   headlineStyling: {
     fontSize: 35,
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
   buttonPanelView: {
     alignItems: 'center',
     width: "100%",
-    height: "10%"
+    height: "20%"
   },
   backgroundPane: {
     backgroundColor: '#e9baba',
@@ -220,6 +221,6 @@ const styles = StyleSheet.create({
     bottom: Dimensions.get('window').height
   },
   scrollingView: {
-    height: 300
+    height: 400
   }
 });
