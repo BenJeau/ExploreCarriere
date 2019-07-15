@@ -46,17 +46,16 @@ class Login extends React.PureComponent {
 
         <View>
           <TextInput
-    theme={{ colors: { accent: "#ffffff", placeholder: 'white', primary: 'white',underlineColor:'transparent',background : '#ffffff'}}}
+    theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
 
 style={styles.input}
               label='Courriel'
               mode='outlined'
               value={this.state.email}
-              error={!this.state.validEmail}
+              error={this.state.email &&!this.state.validEmail}
               onChangeText={(input) => this.validateEmail(input)}
           />
           <HelperText
-           style={{ color: "#1C88E5"}}
             type="error"
             visible={!this.state.validEmail && this.state.email.length !== 0}
           >Format invalide de courriel
@@ -65,20 +64,19 @@ style={styles.input}
 
         <View>
           <TextInput
-           theme={{ colors: { background: "#ffffff", accent: "#123123" } }}
+    theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
               style={styles.input}
               label='Mot de passe'
               mode='outlined'
               value={this.state.password}
               secureTextEntry={this.state.hidePassword}
-              error={!this.state.validPassword}
+              error={this.state.password && !this.state.validPassword}
               onChangeText={(input) => this.validatePassword(input)}
           />
           <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = {this.managePasswordVisibility }>
             <Image source = { ( this.state.hidePassword ) ? require('../../assets/hide.png') : require('../../assets/view.png') } style = { styles.btnImage } />
           </TouchableOpacity>
           <HelperText
-           style={{ color: "#1C88E5"}}
             type="error"
             visible={!this.state.validPassword && this.state.password.length !== 0}
           >
