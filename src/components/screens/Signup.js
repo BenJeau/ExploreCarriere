@@ -64,7 +64,6 @@ class Signup extends React.PureComponent {
         <Title style={styles.subtitleStyle}>Votre nouvelle carrière, commence ici</Title>
 
         <View style={styles.scrollingView}>
-          <ScrollView>
             <TextInput
               theme={{ colors: { background: "#ffffff"} }}
               style={styles.input}
@@ -141,7 +140,6 @@ class Signup extends React.PureComponent {
                 <Image source = { ( this.state.hidePassword ) ? require('../../assets/hide.png') : require('../../assets/view.png') } style = { styles.btnImage } />
               </TouchableOpacity>
             </View>
-          </ScrollView>
         </View>
 
         <View style={styles.buttonPanelView}>

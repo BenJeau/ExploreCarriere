@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Image, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Image, Dimensions, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { connect } from 'react-redux';
 import {Button, Headline, Title, TextInput, HelperText} from 'react-native-paper';
 
@@ -35,7 +35,10 @@ class Login extends React.PureComponent {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView  style={styles.container}keyboardVerticalOffset={100} behavior="height" enabled>
+
+
+
 
         <Image style={styles.bannerImage}
           source={require("../../assets/fogg-waiting-2.png")}
@@ -106,7 +109,8 @@ style={styles.input}
 
           </View>
         </View>
-      </View>
+
+      </KeyboardAvoidingView>
     );
   }
 }
