@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import {Button, Headline, Title, TextInput, HelperText} from 'react-native-paper';
 
 class Login extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state =
       {
         hidePassword: true,
@@ -46,7 +46,9 @@ class Login extends React.PureComponent {
 
         <View>
           <TextInput
-              style={styles.input}
+    theme={{ colors: { accent: "#ffffff", placeholder: 'white', primary: 'white',underlineColor:'transparent',background : '#ffffff'}}}
+
+style={styles.input}
               label='Courriel'
               mode='outlined'
               value={this.state.email}
@@ -54,6 +56,7 @@ class Login extends React.PureComponent {
               onChangeText={(input) => this.validateEmail(input)}
           />
           <HelperText
+           style={{ color: "#1C88E5"}}
             type="error"
             visible={!this.state.validEmail && this.state.email.length !== 0}
           >Format invalide de courriel
@@ -62,6 +65,7 @@ class Login extends React.PureComponent {
 
         <View>
           <TextInput
+           theme={{ colors: { background: "#ffffff", accent: "#123123" } }}
               style={styles.input}
               label='Mot de passe'
               mode='outlined'
@@ -74,6 +78,7 @@ class Login extends React.PureComponent {
             <Image source = { ( this.state.hidePassword ) ? require('../../assets/hide.png') : require('../../assets/view.png') } style = { styles.btnImage } />
           </TouchableOpacity>
           <HelperText
+           style={{ color: "#1C88E5"}}
             type="error"
             visible={!this.state.validPassword && this.state.password.length !== 0}
           >

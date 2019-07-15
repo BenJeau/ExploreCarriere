@@ -1,11 +1,11 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, TouchableOpacity, View, ScrollView} from 'react-native';
+import {Dimensions, Image, StyleSheet, TouchableOpacity, View, ScrollView, StatusBar} from 'react-native';
 import { connect } from 'react-redux';
 import {Button, Headline, HelperText, TextInput, Title} from 'react-native-paper';
 
 class Signup extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state =
       {
         hidePassword: true,
@@ -19,6 +19,8 @@ class Signup extends React.PureComponent {
         validPasswordVerification : false,
         canProceed : false
       }
+
+    StatusBar.setBackgroundColor("#FFFFFFD0");
   }
 
   managePasswordVisibility = () => {
@@ -52,6 +54,7 @@ class Signup extends React.PureComponent {
 
   render() {
     return (
+      <ScrollView>
       <View style={styles.container}>
 
         <Image style={styles.bannerImage}
@@ -63,6 +66,7 @@ class Signup extends React.PureComponent {
         <View style={styles.scrollingView}>
           <ScrollView>
             <TextInput
+              theme={{ colors: { background: "#ffffff"} }}
               style={styles.input}
               label='Nom'
               mode='outlined'
@@ -78,6 +82,7 @@ class Signup extends React.PureComponent {
 
 
             <TextInput
+              theme={{ colors: { background: "#ffffff"} }}
               style={styles.input}
               label='Courriel'
               mode='outlined'
@@ -94,6 +99,7 @@ class Signup extends React.PureComponent {
 
             <View>
               <TextInput
+                theme={{ colors: { background: "#ffffff"} }}
                 style={styles.input}
                 label='Mot de passe'
                 mode='outlined'
@@ -115,6 +121,7 @@ class Signup extends React.PureComponent {
             </View>
             <View>
               <TextInput
+                theme={{ colors: { background: "#ffffff"} }}
                 style={styles.input}
                 label='Vérification du mot de passe'
                 mode='outlined'
@@ -151,6 +158,8 @@ class Signup extends React.PureComponent {
 
         </View>
       </View>
+        
+        </ScrollView>
     );
   }
 }
