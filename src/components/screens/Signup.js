@@ -70,7 +70,7 @@ class Signup extends React.PureComponent {
               label='Nom'
               mode='outlined'
               value={this.state.name}
-              error={!this.state.validName}
+              error={this.state.name && !this.state.validName}
               onChangeText={(input) => this.validateName(input)}
             />
             <HelperText
@@ -86,7 +86,7 @@ class Signup extends React.PureComponent {
               label='Courriel'
               mode='outlined'
               value={this.state.email}
-              error={!this.state.validEmail}
+              error={this.state.email && !this.state.validEmail}
               onChangeText={(input) => this.validateEmail(input)}
             />
             <HelperText
@@ -103,7 +103,7 @@ class Signup extends React.PureComponent {
                 label='Mot de passe'
                 mode='outlined'
                 value={this.state.password}
-                error={!this.state.validPassword}
+                error={this.state.validPassword && !this.state.validPassword}
                 onChangeText={(input) => this.validatePassword(input)}
                 secureTextEntry={this.state.hidePassword}
               />
@@ -125,7 +125,7 @@ class Signup extends React.PureComponent {
                 label='Vérification du mot de passe'
                 mode='outlined'
                 value={this.state.passwordVerification}
-                error={!this.state.validPasswordVerification}
+                error={this.state.passwordVerification && !this.state.validPasswordVerification}
                 onChangeText={(input) => this.validatePasswordVerification(input)}
                 secureTextEntry={this.state.hidePassword}
               />

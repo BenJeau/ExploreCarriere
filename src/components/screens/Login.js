@@ -37,9 +37,6 @@ class Login extends React.PureComponent {
     return (
       <KeyboardAvoidingView  style={styles.container}keyboardVerticalOffset={100} behavior="height" enabled>
 
-
-
-
         <Image style={styles.bannerImage}
           source={require("../../assets/fogg-waiting-2.png")}
         />
@@ -49,10 +46,12 @@ class Login extends React.PureComponent {
 
         <View>
           <TextInput
-    theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
-
-style={styles.input}
+              theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
+              onSubmitEditing={() => { this.passwordInput.focus(); }}
+              blurOnSubmit={false}
+              style={styles.input}
               label='Courriel'
+              returnKeyType = {'next'}
               mode='outlined'
               value={this.state.email}
               error={this.state.email &&!this.state.validEmail}
@@ -67,8 +66,10 @@ style={styles.input}
 
         <View>
           <TextInput
-    theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
+              theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
               style={styles.input}
+              ref={(i) => this.passwordInput = i}
+              returnKeyType = {'done'}
               label='Mot de passe'
               mode='outlined'
               value={this.state.password}
@@ -105,9 +106,7 @@ style={styles.input}
             Créer un compte
           </Button>
 
-          <View style={styles.backgroundPane}>
-
-          </View>
+          <View style={styles.backgroundPane} />
         </View>
 
       </KeyboardAvoidingView>
