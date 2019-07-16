@@ -127,7 +127,6 @@ const LoginNavigator = createStackNavigator(
 		Signup: {
 			screen: Signup,
 			navigationOptions: {
-				title: 'Enregistrement',
 				headerTransparent: true,
 				headerTintColor: '#000',
 				headerStyle: {
