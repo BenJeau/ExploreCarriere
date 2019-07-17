@@ -9,7 +9,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 class JobDetail extends React.PureComponent {
   render() {
-    let jobId = 1;
+    let jobId = this.props.jobId;
     let selectedJobInfo = jobInfo.find(item => item.id === jobId);
 
     console.log(this.props);
@@ -87,7 +87,13 @@ class JobDetail extends React.PureComponent {
   }
 }
 
-export default connect(store => ({jobId : store.jobId}))(JobDetail);
+let mapToState = (store) => {
+  return {
+    jobId: store.UserReducer.jobId
+  }
+}
+
+export default connect(mapToState)(JobDetail);
 
 const styles = StyleSheet.create({
   container: {
