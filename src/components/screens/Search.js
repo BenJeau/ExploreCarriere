@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Text, Picker, TextInput, Keyboard, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
+import {setJob} from "../../redux/actions";
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -65,6 +66,10 @@ class Search extends React.PureComponent {
         this.setState({ modalVisible: false });
     }
 
+    handleSetJob = (id) => {
+        this.props.setJob(id);
+    }
+
     hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisibleStart: false, isDateTimePickerVisibleEnd: false });
     };
@@ -114,7 +119,7 @@ class Search extends React.PureComponent {
                             <Marker key={key}
                                 coordinate={marker.latlng}>
                                 <Callout tooltip
-                                    onPress={() => { this.props.navigation.navigate("JobDetail") }}>
+                                    onPress={() => { this.handleSetJob(marker.id); this.props.navigation.navigate("JobDetail") }}>
                                     <Popover {...marker} />
                                 </Callout>
                             </Marker>
@@ -239,7 +244,7 @@ class Search extends React.PureComponent {
     }
 }
 
-export default connect()(Search);
+export default connect(null, { setJob })(Search);
 
 const styles = StyleSheet.create({
     container: {

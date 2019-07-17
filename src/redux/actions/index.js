@@ -1,13 +1,9 @@
 import {
 } from "../reducers/constants";
 
-const setRestaurant = restaurant => {
+export const setJob = jobId => {
 	return {
-		type: "SET_RESTAURANT",
-		restaurant,
+		type: "SET_JOB",
+		jobId,
 	};
 };
-
-
-export {
-}
