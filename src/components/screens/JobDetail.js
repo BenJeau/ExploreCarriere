@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     justifyContent: 'flex-end',
-    elevation: 10
+    elevation: 6,
+    marginTop: 5
   },
   companyBannerImage: {
     position: 'absolute',
