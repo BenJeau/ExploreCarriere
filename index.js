@@ -172,7 +172,7 @@ const MainNavigator = createSwitchNavigator(
 		}
 	},
 	{
-		initialRouteName: 'Welcome',
+		initialRouteName: 'JobNavigator',
 	}
 );
 
