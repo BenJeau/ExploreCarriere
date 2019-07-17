@@ -7,8 +7,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 class Settings extends React.PureComponent {
   render() {
 
-    const arrowIcon = <Icon name="keyboard-arrow-right" size={30} color="black" />;
-    const redArrowIcon = <Icon name="keyboard-arrow-right" size={30} color="#c74b4b" />;
+    const arrowIcon = <View style={{justifyContent: 'center'}}>
+      <Icon name="keyboard-arrow-right" size={30} color="black" />
+    </View>;
+    const redArrowIcon = <View style={{justifyContent: 'center'}}>
+      <Icon name="keyboard-arrow-right" size={30} color="#c74b4b" />
+    </View>;
 
     return (
       <View style={styles.container}>
@@ -18,8 +22,8 @@ class Settings extends React.PureComponent {
             <Title style={styles.subtitleStyle}>John Smith</Title>
 
           </View>
-          <View>
-            <Icon name="face" size={100} color="black"/>
+          <View style={styles.faceContainer}>
+            <Icon name="face" size={50} color="black"/>
           </View>
         </View>
 
@@ -40,6 +44,11 @@ class Settings extends React.PureComponent {
             right={() => arrowIcon}
           />
           <List.Item
+            title="Foire de questions (FAQ)"
+            titleStyle={styles.optionStyle}
+            right={() => arrowIcon}
+          />
+          <List.Item
             title="Déconnexion"
             titleStyle={styles.logOutStyle}
             right={() => redArrowIcon}
@@ -52,11 +61,8 @@ class Settings extends React.PureComponent {
               Politique de confidentialité | Conditions d'utilisation
           </Text>
 
-
           <Text style={styles.boldBottomText}>Version 0.1</Text>
-
         </View>
-
       </View>
     );
   }
@@ -70,11 +76,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    backgroundColor: 'white'
   },
   header: {
     width: '100%',
-    paddingLeft: 15,
+    paddingHorizontal: 15,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -82,14 +89,21 @@ const styles = StyleSheet.create({
   },
   headlineStyling: {
     fontWeight: 'bold',
-    fontSize: 33
+    fontSize: 33, 
+    marginBottom: -2
   },
   subtitleStyle: {
     fontWeight: '100',
     fontSize: 22
   },
-  welcomeMessages: {
-
+  faceContainer: {
+    height: 80, 
+    width: 80, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    elevation: 5, 
+    backgroundColor: 'white', 
+    borderRadius: 50
   },
   optionsStyle: {
     height: '50%',
