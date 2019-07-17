@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   availabilitiesButton: {
     width: '100%',
     backgroundColor: '#1f88e5',
-    // marginVertical: 30,
+    marginVertical: 20,
     borderRadius: 10,
     elevation: 3
   },
