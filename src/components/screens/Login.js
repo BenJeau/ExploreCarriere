@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Image, Dimensions, TouchableOpacity, KeyboardAvoidingView, Text} from 'react-native';
 import { connect } from 'react-redux';
-import {Button, Headline, Title, TextInput, HelperText} from 'react-native-paper';
+import {Headline, Title, TextInput, HelperText} from 'react-native-paper';
 import Touchable from 'react-native-platform-touchable';
 
 class Login extends React.PureComponent {
@@ -38,14 +38,20 @@ class Login extends React.PureComponent {
     return (
       <KeyboardAvoidingView  style={styles.container}keyboardVerticalOffset={100} behavior="height" enabled>
 
-        <Image style={styles.bannerImage}
-          source={require("../../assets/fogg-waiting-2.png")}
-        />
+        <View style={{flex: 0.3, width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}>
+          <Image style={styles.bannerImage}
+            source={require("../../assets/fogg-waiting-2.png")} />
+        </View>
 
-        <Headline style={styles.headlineStyling}>Exploration de carrière</Headline>
-        <Title style={styles.subtitleStyle}>Découvrez votre carrière</Title>
+        <View style={{flex: 0.1, width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}>
+          <Headline style={styles.headlineStyling}>Exploration de carrière</Headline>
+          <Title style={styles.subtitleStyle}>Découvrez votre carrière</Title>
+        </View>
 
-        <View>
+        <View style={{flex: 0.3, width: "100%", height: "100%", alignItems: 'center', justifyContent: 'flex-end'}}>
+
+          <View>
+
           <TextInput
               theme={{ colors: { primary: "#1C88E5",  background:"#ffffff", underlineColor:'#1C88E5'}}}
               onSubmitEditing={() => { this.passwordInput.focus(); }}
@@ -63,9 +69,10 @@ class Login extends React.PureComponent {
             visible={!this.state.validEmail && this.state.email.length !== 0}
           >Format invalide de courriel
           </HelperText>
-        </View>
+          </View>
+          <View>
+            
 
-        <View>
           <TextInput
               theme={{ colors: { primary: "#1C88E5", background:"#ffffff", underlineColor:'#1C88E5'}}}
               style={styles.input}
@@ -88,6 +95,7 @@ class Login extends React.PureComponent {
             Doit contenir 6 caractères ou plus
           </HelperText>
         </View>
+          </View>
 
         <View style={styles.buttonPanelView}>
           <View style={[styles.logInContainer, {elevation: this.state.canProceed ? 5 : 0}]}>
@@ -126,11 +134,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight: Dimensions.get("screen").height
   },
   bannerImage: {
     width: "80%",
-    height: 200
+    height: "100%",
+    marginVertical: 10
   },
   input: {
     width: 350,
@@ -151,7 +161,8 @@ const styles = StyleSheet.create({
   buttonPanelView: {
     alignItems: 'center',
     width: "100%",
-    height: "25%"
+    height: "25%",
+    flex: 0.25
   },
   backgroundPane: {
     backgroundColor: '#bbdbf7',

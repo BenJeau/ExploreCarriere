@@ -1,7 +1,9 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, TouchableOpacity, View, ScrollView, StatusBar} from 'react-native';
+import {Dimensions, Image, StyleSheet, TouchableOpacity, View, ScrollView, StatusBar, 
+  Text, KeyboardAvoidingView} from 'react-native';
 import { connect } from 'react-redux';
-import {Button, Headline, HelperText, TextInput, Title} from 'react-native-paper';
+import {Headline, HelperText, TextInput, Title} from 'react-native-paper';
+import Touchable from 'react-native-platform-touchable';
 
 class Signup extends React.PureComponent {
   constructor(props) {
@@ -54,8 +56,9 @@ class Signup extends React.PureComponent {
 
   render() {
     return (
+
       <ScrollView>
-      <View style={styles.container}>
+      <KeyboardAvoidingView  style={styles.container}keyboardVerticalOffset={100} behavior="padding" enabled>
 
         <Image style={styles.bannerImage}
                source={require("../../assets/fogg-welcome-2.png")}
@@ -65,6 +68,9 @@ class Signup extends React.PureComponent {
 
         <View style={styles.scrollingView}>
             <TextInput
+              onSubmitEditing={() => { this.email.focus(); }}
+              blurOnSubmit={false}
+              returnKeyType = {'next'}
               theme={{ colors: { background: "#ffffff"} }}
               style={styles.input}
               label='Nom'
@@ -81,6 +87,10 @@ class Signup extends React.PureComponent {
 
 
             <TextInput
+              ref={(i) => this.email = i}
+              onSubmitEditing={() => { this.password.focus(); }}
+              blurOnSubmit={false}
+              returnKeyType = {'next'}
               theme={{ colors: { background: "#ffffff"} }}
               style={styles.input}
               label='Courriel'
@@ -98,6 +108,10 @@ class Signup extends React.PureComponent {
 
             <View>
               <TextInput
+                ref={(i) => this.password = i}
+                onSubmitEditing={() => { this.passwordVerif.focus(); }}
+                blurOnSubmit={false}
+                returnKeyType = {'next'}
                 theme={{ colors: { background: "#ffffff"} }}
                 style={styles.input}
                 label='Mot de passe'
@@ -120,6 +134,8 @@ class Signup extends React.PureComponent {
             </View>
             <View>
               <TextInput
+                ref={(i) => this.passwordVerif = i}
+                returnKeyType = {'done'}
                 theme={{ colors: { background: "#ffffff"} }}
                 style={styles.input}
                 label='Vérification du mot de passe'
@@ -143,21 +159,28 @@ class Signup extends React.PureComponent {
         </View>
 
         <View style={styles.buttonPanelView}>
-          <Button style={styles.signUp}
-                  mode = 'contained'
-                  dark = {true}
-                  disabled = {!this.state.canProceed}
-                  onPress={() => this.props.navigation.navigate("DashboardNavigator")}
-          >
-            Créer un compte
-          </Button>
+
+
+        <View style={[styles.signUpContainer, {elevation: this.state.canProceed ? 5 : 0}]}>
+
+        <Touchable style={[styles.signUp, {backgroundColor: this.state.canProceed ? "transparent" : "#00000010"}]}
+          disabled={!this.state.canProceed}
+          onPress={() => this.props.navigation.navigate("DashboardNavigator")}>
+
+          <Text style={[styles.signUpText, {color: this.state.canProceed ? "white" : "#00000050"}]}>
+          
+          Créer un compte
+          </Text>
+
+        </Touchable>
+        </View>
 
           <View style={styles.backgroundPane}/>
 
         </View>
-      </View>
         
-        </ScrollView>
+      </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }
@@ -168,7 +191,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight: Dimensions.get("screen").height
   },
   bannerImage: {
     width: "70%",
@@ -179,12 +203,14 @@ const styles = StyleSheet.create({
     fontSize: 35,
     padding: 10,
     width: "80%",
-    color: 'gray',
+    color: '#232323',
     textAlign: 'center',
-    lineHeight: 50
+    lineHeight: 40
   },
   subtitleStyle: {
-    fontSize: 20
+    fontSize: 20,
+    color: '#868686',
+    marginBottom: 30
   },
   input: {
     width: 350,
@@ -206,12 +232,22 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   signUp: {
-    width: "70%",
-    marginTop: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
+    width: "100%",
+    paddingVertical: 20,
+    alignItems: 'center'
+  },
+  signUpText: {
+    textTransform: 'uppercase',
+    fontWeight: "bold",
     borderRadius: 10,
-    backgroundColor: '#c74b4b'
+    letterSpacing: 1.5
+  },
+  signUpContainer: {
+    borderRadius: 10, 
+    width: '70%',
+    backgroundColor: "#c74b4b",
+    marginTop: 20,
+    overflow: 'hidden'
   },
   buttonPanelView: {
     alignItems: 'center',
