@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Image, Dimensions, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, View, Image, Dimensions, TouchableOpacity, KeyboardAvoidingView, Text} from 'react-native';
 import { connect } from 'react-redux';
 import {Button, Headline, Title, TextInput, HelperText} from 'react-native-paper';
+import Touchable from 'react-native-platform-touchable';
 
 class Login extends React.PureComponent {
   constructor(props) {
@@ -46,7 +47,7 @@ class Login extends React.PureComponent {
 
         <View>
           <TextInput
-              theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
+              theme={{ colors: { primary: "#1C88E5",  background:"#ffffff", underlineColor:'#1C88E5'}}}
               onSubmitEditing={() => { this.passwordInput.focus(); }}
               blurOnSubmit={false}
               style={styles.input}
@@ -66,7 +67,7 @@ class Login extends React.PureComponent {
 
         <View>
           <TextInput
-              theme={{ colors: { primary: "#1C88E5", placeholder: '#1C88E5', background:"#ffffff", underlineColor:'#1C88E5'}}}
+              theme={{ colors: { primary: "#1C88E5", background:"#ffffff", underlineColor:'#1C88E5'}}}
               style={styles.input}
               ref={(i) => this.passwordInput = i}
               returnKeyType = {'done'}
@@ -89,25 +90,30 @@ class Login extends React.PureComponent {
         </View>
 
         <View style={styles.buttonPanelView}>
-          <Button style={styles.logIn}
-            mode = 'contained'
-            dark = {true}
-            disabled = {!this.state.canProceed}
-            onPress={() => this.props.navigation.navigate("DashboardNavigator")}
-          >
-            S'authentifier
-          </Button>
+          <View style={[styles.logInContainer, {elevation: this.state.canProceed ? 5 : 0}]}>
 
-          <Button style={styles.signUp}
-            mode = 'contained'
-            dark = {false}
-            onPress={() => this.props.navigation.navigate("Signup")}
-          >
-            Créer un compte
-          </Button>
+          <Touchable style={[styles.logIn, {backgroundColor: this.state.canProceed ? "transparent" : "#00000010"}]}
+            disabled={!this.state.canProceed}
+            onPress={() => this.props.navigation.navigate("DashboardNavigator")}>
 
-          <View style={styles.backgroundPane} />
+            <Text style={[styles.logInText, {color: this.state.canProceed ? "white" : "#00000050"}]}>
+            S'authentifier  
+            </Text>
+
+          </Touchable>
         </View>
+
+        <View style={styles.signUpContainer}>
+          <Touchable  style={styles.signUp}             
+            onPress={() => this.props.navigation.navigate("Signup")}>
+            <Text style={styles.logInText}>
+            Créer un compte
+            </Text>
+          </Touchable>
+        </View>
+
+        <View style={styles.backgroundPane} />
+      </View>
 
       </KeyboardAvoidingView>
     );
@@ -134,12 +140,13 @@ const styles = StyleSheet.create({
     fontSize: 35,
     padding: 10,
     width: "80%",
-    color: 'gray',
+    color: '#232323',
     textAlign: 'center',
-    lineHeight: 50
+    lineHeight: 40
   },
   subtitleStyle: {
-    fontSize: 20
+    fontSize: 20,
+    color: '#868686',
   },
   buttonPanelView: {
     alignItems: 'center',
@@ -156,18 +163,34 @@ const styles = StyleSheet.create({
     bottom: Dimensions.get('window').height
   },
   logIn: {
-    width: "70%",
-    backgroundColor: '#1f88e5',
-    marginTop: 20,
-    paddingTop: 10,
-    paddingBottom: 10
+    width: "100%",
+    paddingVertical: 20,
+    alignItems: 'center'
   },
-  signUp: {
-    width: "50%",
+  logInText: {
+    textTransform: 'uppercase',
+    fontWeight: "bold",
+    borderRadius: 10,
+    letterSpacing: 1.5
+  },
+  logInContainer: {
+    borderRadius: 10, 
+    width: '70%',
+    backgroundColor: "#1f88e5",
+    marginTop: 20,
+    overflow: 'hidden'
+  },
+  signUpContainer: {
     backgroundColor: 'white',
     borderRadius: 20,
+    marginTop: 20,
+    elevation: 3,
+    overflow: 'hidden'
+  },
+  signUp: {
     color: 'gray',
-    marginTop: 20
+    paddingHorizontal: 15,
+    paddingVertical: 8
   },
   visibilityBtn:
   {
