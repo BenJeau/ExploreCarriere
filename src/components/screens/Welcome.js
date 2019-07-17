@@ -6,23 +6,23 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const slides = [
   {
-    key: 'somethun',
+    key: 'prep',
     title: 'Préparation',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac elementum risus. Mauris in elementum eros, mattis consectetur nunc.',
+    text: 'Nous allons donnez tout les outils nécessaire pour vous guider à choisir le meilleur emploi et à profiter de votre mieux de vos expériences',
     image: require('../../assets/fogg-premium-upgrade-1.png'),
     backgroundColor: '#ffffff',
   },
   {
-    key: 'somethun-dos',
+    key: 'exp',
     title: 'Expérience',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac elementum risus. Mauris in elementum eros, mattis consectetur nunc.',
+    text: `Obtenez de l'expérience dans divers emplois à court terme, pour que vous puissiez faire le bon choix de carrière`,
     image: require('../../assets/fogg-payment-processed-1.png'),
     backgroundColor: '#ffffff',
   },
   {
-    key: 'somethun1',
+    key: 'carr',
     title: 'Carrière',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac elementum risus. Mauris in elementum eros, mattis consectetur nunc.',
+    text: `L'application vous recommendera des carrières suites à vos essaies de carrières et vous allez trouver la carrière de vos rêves`,
     image: require('../../assets/fogg-success-1.png'),
     backgroundColor: '#ffffff',
   }
@@ -73,7 +73,7 @@ class Welcome extends React.PureComponent {
         renderItem={this._renderItem}
         renderDoneButton={this._renderDoneButton}
         renderNextButton={this._renderNextButton}
-        activeDotStyle={{backgroundColor: '#565656'}}
+        activeDotStyle={{backgroundColor: '#565656', elevation: 3}}
         onDone={() => this.props.navigation.navigate("LoginNavigator")} />
     );
   }
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#565656',
     borderRadius: 25,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   image: {
     flex: 0.63, 
