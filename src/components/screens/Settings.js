@@ -75,17 +75,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
     backgroundColor: 'white'
   },
   header: {
     width: '100%',
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 60
+    marginTop: 60,
   },
   headlineStyling: {
     fontWeight: 'bold',
@@ -112,11 +110,13 @@ const styles = StyleSheet.create({
   optionStyle: {
     fontWeight: '900',
     fontSize: 18,
+    paddingHorizontal: 10,
   },
   logOutStyle: {
     fontWeight: '900',
     fontSize: 18,
-    color: "#c74b4b"
+    color: "#c74b4b",
+    paddingHorizontal: 10,
   },
   bottomIndications: {
     alignItems: 'center',
