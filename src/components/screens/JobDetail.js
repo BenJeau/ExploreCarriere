@@ -1,13 +1,15 @@
 import React from 'react';
-import {StyleSheet, Image, View, ScrollView} from 'react-native';
+import {StyleSheet, Image, View, ScrollView, Dimensions} from 'react-native';
 import { connect } from 'react-redux';
 import {Button, Headline, Text, Title, List} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import jobInfo from '../../data/emplois';
 import LinearGradient from "react-native-linear-gradient";
+import {Header} from 'react-navigation';
 
 class JobDetail extends React.PureComponent {
+
   render() {
     let jobId = this.props.jobId;
     let selectedJobInfo = jobInfo.find(item => item.id === jobId);
@@ -21,9 +23,9 @@ class JobDetail extends React.PureComponent {
     const moneyIcon = <Icon name="attach-money" size={30} color="black" />;
 
     return (
+      <ScrollView>
       <View style={styles.container}>
 
-        <View style={styles.contentPane}>
           <LinearGradient
             colors={['rgba(255,255,255,0)', '#000000']}
             style={styles.companyBanner}>
@@ -61,17 +63,12 @@ class JobDetail extends React.PureComponent {
               style={styles.listElement}
               left={() => moneyIcon}
             />
-            <ScrollView
-              style={styles.scrollViewStyle}
-            >
               <Text
                 style={styles.jobDescription}
               >
                 {selectedJobInfo.textDescription}
               </Text>
-            </ScrollView>
           </View>
-        </View>
 
         <Button
           onPress={() => this.props.navigation.navigate("Availabilities")}
@@ -83,6 +80,8 @@ class JobDetail extends React.PureComponent {
         </Button>
 
       </View>
+        
+        </ScrollView>
     );
   }
 }
@@ -98,31 +97,29 @@ export default connect(mapToState)(JobDetail);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: getStatusBarHeight()
+    width: Dimensions.get("screen").width - 40,
+    minHeight: Dimensions.get("screen").height,
+    paddingTop: getStatusBarHeight() + Header.HEIGHT,
+    marginHorizontal: 20
   },
   availabilitiesButton: {
-    width: '90%',
+    width: '100%',
     backgroundColor: '#1f88e5',
-    marginTop: 50,
-    paddingTop: 5,
-    paddingBottom: 5,
+    // marginVertical: 30,
     borderRadius: 10,
     elevation: 3
   },
   contentPane: {
-    height: '80%',
     width: '95%',
     paddingHorizontal: 10
   },
   companyBanner: {
     height: '40%',
     width: '100%',
-    marginTop: 20,
-    borderRadius: 20,
+    borderRadius: 10,
     marginBottom: 10,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    elevation: 10
   },
   companyBannerImage: {
     position: 'absolute',
@@ -130,7 +127,7 @@ const styles = StyleSheet.create({
     left: 0,
     height: '100%',
     width: '100%',
-    borderRadius: 20,
+    borderRadius: 10,
     zIndex : -1
   },
   headlineStyling: {
@@ -147,12 +144,6 @@ const styles = StyleSheet.create({
   },
   jobDescription: {
     fontSize: 16,
-    paddingLeft: 20,
-    paddingRight: 20,
     lineHeight: 22,
-  },
-  scrollViewStyle: {
-    marginTop: 10,
-    height: 200
   }
 });
