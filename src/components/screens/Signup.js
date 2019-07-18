@@ -95,6 +95,7 @@ class Signup extends React.PureComponent {
               style={styles.input}
               label='Courriel'
               mode='outlined'
+              keyboardType="email-address"
               value={this.state.email}
               error={this.state.email && !this.state.validEmail}
               onChangeText={(input) => this.validateEmail(input)}

@@ -110,7 +110,7 @@ const JobNavigator = createStackNavigator(
 				shadowOpacity: 0,
 				borderBottomWidth: 0,
 				marginTop: getStatusBarHeight(),
-				backgroundColor: '#ffffffd0'
+				// backgroundColor: '#ffffffd0'
 			}
 		}
 	}
@@ -172,7 +172,7 @@ const MainNavigator = createSwitchNavigator(
 		}
 	},
 	{
-		initialRouteName: 'Welcome',
+		initialRouteName: 'JobNavigator',
 	}
 );
 

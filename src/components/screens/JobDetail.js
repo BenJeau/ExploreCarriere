@@ -10,6 +10,13 @@ import {Header} from 'react-navigation';
 
 class JobDetail extends React.PureComponent {
 
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: '#ffffffd0',
+      marginTop: getStatusBarHeight()
+    }
+  }
+
   render() {
     let jobId = this.props.jobId;
     let selectedJobInfo = jobInfo.find(item => item.id === jobId);

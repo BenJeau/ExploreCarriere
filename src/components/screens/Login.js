@@ -58,6 +58,7 @@ class Login extends React.PureComponent {
               blurOnSubmit={false}
               style={styles.input}
               label='Courriel'
+              keyboardType="email-address"
               returnKeyType = {'next'}
               mode='outlined'
               value={this.state.email}
