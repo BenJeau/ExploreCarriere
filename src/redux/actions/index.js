@@ -1,4 +1,4 @@
-import { SET_PAYMENT_TYPE, SET_PAYMENT_NAME, SET_PAYMENT_NUMBER, SET_PAYMENT_CVV, SET_PAYMENT_MONTH, SET_PAYMENT_YEAR, SET_AVAILABILITY } from "../reducers/constants";
+import { SET_PAYMENT_TYPE, SET_PAYMENT_NAME, SET_PAYMENT_NUMBER, SET_PAYMENT_CVV, SET_PAYMENT_MONTH, SET_PAYMENT_YEAR, SET_AVAILABILITY, SET_JOB } from "../reducers/constants";
 
 const setPaymentType = paymentType => {
 	return {
@@ -49,6 +49,13 @@ const setAvailability = selectedAvailability => {
 	};
 };
 
+const setJob = jobId => {
+	return {
+		type: SET_JOB,
+		jobId,
+	};
+};
+
 export {
 	setPaymentType,
 	setPaymentName,
@@ -57,4 +64,5 @@ export {
 	setPaymentYear,
 	setPaymentNumber,
 	setAvailability,
+	setJob,
 }

@@ -5,3 +5,4 @@ export const SET_PAYMENT_CVV = "SET_PAYMENT_CVV";
 export const SET_PAYMENT_MONTH = "SET_PAYMENT_MONTH";
 export const SET_PAYMENT_YEAR = "SET_PAYMENT_YEAR";
 export const SET_AVAILABILITY = "SET_AVAILABILITY";
+export const SET_JOB = "SET_JOB";

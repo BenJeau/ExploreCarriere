@@ -1,4 +1,4 @@
-import { SET_PAYMENT_TYPE, SET_PAYMENT_NAME, SET_PAYMENT_NUMBER, SET_PAYMENT_CVV, SET_PAYMENT_YEAR, SET_PAYMENT_MONTH, SET_AVAILABILITY } from "./constants";
+import { SET_PAYMENT_TYPE, SET_PAYMENT_NAME, SET_PAYMENT_NUMBER, SET_PAYMENT_CVV, SET_PAYMENT_YEAR, SET_PAYMENT_MONTH, SET_AVAILABILITY, SET_JOB } from "./constants";
 
 let defaultState = {
 	paymentType: "",
@@ -7,7 +7,8 @@ let defaultState = {
 	fullName: "",
 	cardNumber: "",
 	cardCVV: "",
-	selectedAvailability: 0
+	selectedAvailability: 0,
+	jobId: 0
 };
 
 export default function UserReducer(state = defaultState, action) {
@@ -52,6 +53,12 @@ export default function UserReducer(state = defaultState, action) {
 			return {
 				...state,
 				selectedAvailability: action.selectedAvailability
+			};
+
+		case SET_JOB:
+			return {
+				...state,
+				jobId: action.jobId
 			};
 
 		default:
