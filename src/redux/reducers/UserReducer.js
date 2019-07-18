@@ -1,4 +1,4 @@
-import { SET_PAYMENT_TYPE, SET_PAYMENT_NAME, SET_PAYMENT_NUMBER, SET_PAYMENT_CVV, SET_PAYMENT_YEAR, SET_PAYMENT_MONTH, SET_AVAILABILITY, SET_JOB } from "./constants";
+import { SET_PAYMENT_TYPE, SET_PAYMENT_NAME, SET_PAYMENT_NUMBER, SET_PAYMENT_CVV, SET_PAYMENT_YEAR, SET_PAYMENT_MONTH, SET_AVAILABILITY, SET_JOB, ADD_APPLIED_JOB } from "./constants";
 
 let defaultState = {
 	paymentType: "",
@@ -8,11 +8,22 @@ let defaultState = {
 	cardNumber: "",
 	cardCVV: "",
 	selectedAvailability: 0,
-	jobId: 0
+	jobId: 0,
+	appliedJobs: []
 };
 
 export default function UserReducer(state = defaultState, action) {
+	console.log(action);
 	switch (action.type) {
+		case ADD_APPLIED_JOB:
+			return {
+				...state,
+				appliedJobs: [
+					...state.appliedJobs,
+					action.appliedJob
+				]
+			};
+
 		case SET_PAYMENT_TYPE:
 			return {
 				...state,

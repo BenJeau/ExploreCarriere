@@ -4,30 +4,36 @@ import { Button } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import AppliedJob from '../AppliedJob';
+import emplois from '../../data/emplois';
+import availabilities from '../../data/availabilities';
 
 class AppliedJobs extends React.PureComponent {
 
   render() {
-    let hasInfo = false;
-    let data = [
-      {
-        image: require("../../assets/BioCanada.jpg"),
-        jobTitle: "Nom de l'emploi",
-        company: "Compagnie",
-        date: "Date"
-      },
-      {
-        image: require("../../assets/BioCanada.jpg"),
-        jobTitle: "Nom de l'emploi",
-        company: "Compagnie",
-        date: "Date"
-      },
-    ];
+    let data = [];
+
+    this.props.appliedJobs.forEach(i => {
+      let emploi = {};
+
+      emplois.forEach(j => {
+        if (j.id === i.jobId) {
+          emploi.jobTitle = j.jobTitle;
+          emploi.company = j.companyTitle;
+          emploi.image = j.imgSrc;
+        }
+      });
+
+      emploi.date = availabilities[i.selectedAvailability].date;
+
+      data.push(emploi);
+    });
+
+    console.log(data);
 
     return (
       <View style={styles.container}>
         {
-          hasInfo ? (
+          data.length !== 0 ? (
             <ScrollView style={styles.scrollContainer}>
               <View style={styles.content}>
                 <Text style={styles.description}>Voici les emplois que vous avez postulés</Text>
@@ -59,7 +65,13 @@ class AppliedJobs extends React.PureComponent {
   }
 }
 
-export default connect()(AppliedJobs);
+let mapState = store => {
+  return {
+    appliedJobs: store.UserReducer.appliedJobs
+  }
+}
+
+export default connect(mapState)(AppliedJobs);
 
 const styles = StyleSheet.create({
   container: {

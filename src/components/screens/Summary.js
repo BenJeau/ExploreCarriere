@@ -1,13 +1,15 @@
 import React from 'react';
-import {Dimensions, Image, ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import {Button, Headline, List, Text, Title, Dialog, Paragraph, Portal} from 'react-native-paper';
-import {getStatusBarHeight} from "react-native-iphone-x-helper";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import LinearGradient from "react-native-linear-gradient";
 import jobInfo from '../../data/emplois';
 import availabilities from '../../data/availabilities';
 import Icon from "react-native-vector-icons/MaterialIcons";
-import {Header} from "react-navigation";
+import { Header } from "react-navigation";
+import { addAppliedJob } from '../../redux/actions';
+import { bindActionCreators } from 'redux';
 
 class Summary extends React.PureComponent {
   constructor(props) {
@@ -31,6 +33,15 @@ class Summary extends React.PureComponent {
 
   feedback() {
     this.setState({visible: true});
+    StatusBar.setBackgroundColor("#00000000")
+  }
+
+  nextScreen = () => {
+    this.props.addAppliedJob({
+      jobId: this.props.jobId,
+      selectedAvailability: this.props.selectedAvailability,
+    });
+    this.props.navigation.navigate("DashboardNavigator");
   }
 
   render() {
@@ -40,8 +51,6 @@ class Summary extends React.PureComponent {
     let selectedAvailability = availability.date;
     let selectedDuration = availability.weekdays;
     let cost = availability.numberOfDays*selectedJobInfo.cost;
-
-    console.log(this.props);
 
     const locationIcon = <Icon name="location-on" size={30} color="black" />;
     const dateIcon = <Icon name="date-range" size={30} color="black" />;
@@ -140,11 +149,12 @@ class Summary extends React.PureComponent {
             onDismiss={() => this.setState({ visible: false })}
           >
             <Dialog.Content>
-              <Paragraph>Votre commande a été traitée avec succès. Merci!</Paragraph>
+              <Paragraph style={{fontSize: 16}}>Votre commande a été traitée avec succès. Merci!</Paragraph>
             </Dialog.Content>
 
             <Dialog.Actions>
-              <Button onPress={() => this.props.navigation.navigate("DashboardNavigator")}>Retour à la recherche</Button>
+              <Button onPress={this.nextScreen}
+                theme={{colors: {primary: "#1f88e5"}}}>Retour à la recherche</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
@@ -164,7 +174,11 @@ let mapToState = (store) => {
   }
 };
 
-export default connect(mapToState)(Summary);
+const mapDispatch = dispatch => {
+	return bindActionCreators({ addAppliedJob }, dispatch);
+};
+
+export default connect(mapToState, mapDispatch)(Summary);
 
 const styles = StyleSheet.create({
   container: {
