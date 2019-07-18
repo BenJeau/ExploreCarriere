@@ -384,7 +384,8 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: 10,
     alignItems: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    borderRadius: 10
   },
   buttonContainer: {
     marginVertical: 20
@@ -407,7 +408,7 @@ const styles = StyleSheet.create({
   payPalButton : { 
     elevation: 4, 
     backgroundColor: '#ffffff', 
-    borderRadius: 5 
+    borderRadius: 5
   },
   payPalIcon: { 
     height: 30, 
