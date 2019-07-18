@@ -11,7 +11,7 @@ export default [
         availabilities: '16 Juin - 15 Juillet 2019',
         maxTimeFrame : '1 semaine',
         minTimeFrame : '1 journée',
-        cost: '50$ par journée',
+        cost: 50,
         textDescription: 'Ayez un apercu de la haute pointe en technologie moderne à AdvSoft. Passez une journée (ou plus!) à découvrir la recherche que notre équipe effectue en Intelligence Artificielle et en Interface Neuronale directe.',
         imgSrc: require("../../src/assets/AdvSoft.jpg")
     },
@@ -27,7 +27,7 @@ export default [
         availabilities: '30 Avril - 30 Juillet 2020',
         maxTimeFrame : '2 semaines',
         minTimeFrame : '5 journées',
-        cost: '100$ par journée',
+        cost: 100,
         textDescription: "Joignez une équipe dynamique d'experts en faune et flore canadienne, où vous aurez l'occasion de voir en oeuvre l'avancée sur l'étude des espèces natives au Canada.",
         imgSrc: require("../../src/assets/BioCanada.jpg")
     },
@@ -43,7 +43,7 @@ export default [
         availabilities: '1 Août - 1 Décembre 2019',
         maxTimeFrame : '4 journées',
         minTimeFrame : '1 journée',
-        cost: '25$ par journée',
+        cost: 25,
         textDescription: "Avez-vous déjà songé à étudier le domaine de comptabilité? Cette offre s'addresse aux jeunes n'ayant pas encore d'expertise dans un domaine. Joignez l'équipe de NextGen, où nous vous introduirons au domaine de la comptabilité.",
         imgSrc: require("../../src/assets/NextGen.jpg")
     },
@@ -59,7 +59,7 @@ export default [
         availabilities: '1 juin - 1 Septembre 2019',
         maxTimeFrame : '4 journées',
         minTimeFrame : '2 journées',
-        cost: '100$ par journée',
+        cost: 100,
         textDescription: "L'illustration est plus qu'un passe-temps! Si vous n'êtes pas convaincus, visitez nos bureaux et découvrez les opportunités de carrière de l'illustration professionelle.",
         imgSrc: require("../../src/assets/primal.jpg")
     },
@@ -75,7 +75,7 @@ export default [
         availabilities: '1 Juillet - 23 Décembre 2019',
         maxTimeFrame : '4 semaines',
         minTimeFrame : '2 semaines',
-        cost: '50$ par journée',
+        cost: 50,
         textDescription: "Aidez de jeunes sportifs universitaires à amorcer leurs carrières tout en découvrant vous-même les opportunités de carrière du domaine de conseillement professionel sportif! Pas d'expérience? C'est l'occasion parfaite pour vous!",
         imgSrc: require("../../src/assets/Uottawa.jpg")
     }

@@ -9,6 +9,8 @@ import { CustomTabs } from 'react-native-custom-tabs';
 import { bindActionCreators } from 'redux';
 import { setPaymentType, setPaymentName, setPaymentNumber, setPaymentCVV, setPaymentMonth, setPaymentYear } from '../../redux/actions';
 
+var moment = require('moment');
+
 const textInputTheme = {
   colors: { 
     primary: "#1C88E5", 
@@ -68,21 +70,59 @@ class Payment extends React.PureComponent {
     let isfilled = true;
     let variables = [];
 
-    if (this.state.paymentState == 'debit') {
-      variables.push('nomComplet')
-      variables.push('numCarte')
-    } else if (this.state.paymentState == 'credit') {
-      variables.push('nomComplet')
-      variables.push('numCarte')
-      variables.push('cvv')
+    if (this.state.paymentState === 'debit') {
+      variables.push('nomComplet');
+      variables.push('numCarte');
+      variables.push('year');
+      variables.push('month');
+    } else if (this.state.paymentState === 'credit') {
+      variables.push('nomComplet');
+      variables.push('numCarte');
+      variables.push('year');
+      variables.push('month');
+      variables.push('cvv');
     }
-/*
 		variables.forEach((i) => {
-			if(this.state[i] == null || this.state[i] == '' ){
-				this.setState({[i]: ''})
-				isfilled = false
-			} 
-		});*/
+		  switch (i) {
+        case 'nomComplet':
+          if(this.state[i] == '')
+          {
+            isfilled = false;
+          }
+          break;
+        case 'numCarte':
+          if (!(/^[\d]{16}$/.test(this.state[i])))
+          {
+            isfilled = false;
+          }
+          break;
+        case 'cvv':
+          if (!(/^[\d]{3}$/.test(this.state[i])))
+          {
+            isfilled = false;
+          }
+          break;
+        case 'year':
+          if (!(/^[\d]{4}$/.test(this.state[i])))
+          {
+            isfilled = false;
+          }
+          break;
+        case 'month':
+          if (this.state[i] < 1 || this.state[i] > 12)
+          {
+            isfilled = false;
+          }
+          else if(!(moment(this.state.year + "-" + this.state.month, 'YYYY-M')
+            .isSameOrAfter(moment())))
+          {
+            isfilled = false;
+          }
+          break;
+        default:
+          break;
+      }
+		});
 
     if (isfilled) {
       this.props.setPaymentType(this.state.paymentState);
@@ -139,14 +179,14 @@ class Payment extends React.PureComponent {
 
           <HelperText
             type="error"
-            visible={cvv == ""} >
-            Le CVV est obligatoire
+            visible={!(/^[\d]{3}$/.test(cvv))} >
+            CVV de 3 chiffres obligatoire
           </HelperText>
         </View>
       )
     }
 
-    if (paymentState != 'paypal') {
+    if (paymentState !== 'paypal') {
       paiementContent = (
         <View>
           <Text style={styles.title}>Information de paiement</Text>
@@ -162,7 +202,7 @@ class Payment extends React.PureComponent {
 
           <HelperText
             type="error"
-            visible={nomComplet == ""}>
+            visible={this.state.nomComplet === undefined || nomComplet == ''}>
             Votre nom est obligatoire
 					</HelperText>
 
@@ -176,8 +216,8 @@ class Payment extends React.PureComponent {
 
           <HelperText
             type="error"
-            visible={numCarte == ""}>
-            Le numero de votre carte est obligatoire
+            visible={!(/^([\d]{16})$/.test(numCarte))}>
+            Numéro de carte de 16 chiffres obligatoire
 					</HelperText>
 
           {CVV}
@@ -201,6 +241,13 @@ class Payment extends React.PureComponent {
               keyboardType="number-pad"
               onChangeText={year => this.setState({ year })} />
           </View>
+          <HelperText
+            type="error"
+            visible={!(month > 1 && month < 13) || !(/^([\d]{4})$/.test(year))
+            || !(moment(this.state.year + "-" + this.state.month, 'YYYY-M')
+              .isSameOrAfter(moment()))}>
+            Date d'expiration valide obligatoire
+          </HelperText>
         </View>
       )
     }

@@ -66,7 +66,7 @@ class JobDetail extends React.PureComponent {
               left={() => timeWhiteIcon}
             />
             <List.Item
-              title={selectedJobInfo.cost}
+              title={selectedJobInfo.cost + "$ par journée"}
               style={styles.listElement}
               left={() => moneyIcon}
             />
