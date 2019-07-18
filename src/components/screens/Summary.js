@@ -36,8 +36,10 @@ class Summary extends React.PureComponent {
   render() {
     let jobId = this.props.jobId;
     let selectedJobInfo = jobInfo.find(item => item.id === jobId);
-    let selectedAvailability = availabilities[this.props.selectedAvailability].date;
-    let selectedDuration = availabilities[this.props.selectedAvailability].weekdays;
+    let availability = availabilities[this.props.selectedAvailability];
+    let selectedAvailability = availability.date;
+    let selectedDuration = availability.weekdays;
+    let cost = availability.numberOfDays*selectedJobInfo.cost;
 
     console.log(this.props);
 
@@ -113,7 +115,7 @@ class Summary extends React.PureComponent {
             left={() => timeIcon}
           />
           <List.Item
-            title={selectedJobInfo.cost}
+            title={cost + "$"}
             style={styles.listElement}
             left={() => moneyIcon}
           />

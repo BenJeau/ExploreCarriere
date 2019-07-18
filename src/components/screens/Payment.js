@@ -9,6 +9,8 @@ import { CustomTabs } from 'react-native-custom-tabs';
 import { bindActionCreators } from 'redux';
 import { setPaymentType, setPaymentName, setPaymentNumber, setPaymentCVV, setPaymentMonth, setPaymentYear } from '../../redux/actions';
 
+var moment = require('moment');
+
 const textInputTheme = {
   colors: { 
     primary: "#1C88E5", 
@@ -82,41 +84,44 @@ class Payment extends React.PureComponent {
     }
 		variables.forEach((i) => {
 		  switch (i) {
+        case 'nomComplet':
+          if(this.state[i] == '')
+          {
+            isfilled = false;
+          }
+          break;
         case 'numCarte':
           if (!(/^[\d]{16}$/.test(this.state[i])))
           {
             isfilled = false;
-            this.setState({[i]: ''})
           }
           break;
         case 'cvv':
           if (!(/^[\d]{3}$/.test(this.state[i])))
           {
             isfilled = false;
-            this.setState({[i]: ''})
           }
           break;
         case 'year':
           if (!(/^[\d]{4}$/.test(this.state[i])))
           {
             isfilled = false;
-            this.setState({[i]: ''})
           }
           break;
         case 'month':
           if (this.state[i] < 1 || this.state[i] > 12)
           {
             isfilled = false;
-            this.setState({[i]: ''})
+          }
+          else if(!(moment(this.state.year + "-" + this.state.month, 'YYYY-M')
+            .isSameOrAfter(moment())))
+          {
+            isfilled = false;
           }
           break;
         default:
           break;
       }
-			if(this.state[i] == null || this.state[i] === '' ){
-				isfilled = false
-        this.setState({[i]: ''})
-			} 
 		});
 
     if (isfilled) {
@@ -181,7 +186,7 @@ class Payment extends React.PureComponent {
       )
     }
 
-    if (paymentState != 'paypal') {
+    if (paymentState !== 'paypal') {
       paiementContent = (
         <View>
           <Text style={styles.title}>Information de paiement</Text>
@@ -197,7 +202,7 @@ class Payment extends React.PureComponent {
 
           <HelperText
             type="error"
-            visible={nomComplet == ""}>
+            visible={this.state.nomComplet === undefined || nomComplet == ''}>
             Votre nom est obligatoire
 					</HelperText>
 
@@ -238,7 +243,9 @@ class Payment extends React.PureComponent {
           </View>
           <HelperText
             type="error"
-            visible={!(month > 1 && month < 13) || !(/^([\d]{4})$/.test(year))}>
+            visible={!(month > 1 && month < 13) || !(/^([\d]{4})$/.test(year))
+            || !(moment(this.state.year + "-" + this.state.month, 'YYYY-M')
+              .isSameOrAfter(moment()))}>
             Date d'expiration valide obligatoire
           </HelperText>
         </View>
