@@ -30,7 +30,7 @@ class Settings extends React.PureComponent {
         <View style={styles.header}>
           <View style={styles.welcomeMessages}>
             <Headline style={styles.headlineStyling}>Bonjour</Headline>
-            <Title style={styles.subtitleStyle}>John Smith</Title>
+            <Title style={styles.subtitleStyle}>Benoît Jeaurond</Title>
 
           </View>
           <View style={styles.faceContainer}>

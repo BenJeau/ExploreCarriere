@@ -55,27 +55,36 @@ class Summary extends React.PureComponent {
         return (
         <View>
           <List.Item
-            title={'Paypal'}
+            title={'PayPal'}
             style={styles.listElement}
             left={() => creditCardIcon}
           />
           <List.Item
-            title={"John Smith"}
+            title={"Benoît Jeaurond"}
             style={styles.listElement}
             left={() => timeWhiteIcon}
           />
         </View>);
       }
       else {
+        let creditCard =
+          <View style={{justifyContent: 'space-between', flexDirection: 'row', width: '100%', paddingLeft: 16, paddingRight: 36}}>
+            <Text style={{fontSize:16}}>Numéro de carte</Text>
+            <Text style ={{fontWeight: 'bold', fontSize:16}}>{"XXXX " + this.props.cardNumber.slice(-4)}</Text>
+          </View>
         return (
         <View>
+          <View style={{flexDirection: "row", width: "100%"}}>
+            {creditCardIcon}
+            {creditCard}
+          </View>
+          {/*<List.Item*/}
+          {/*  title={creditCard}*/}
+          {/*  style={styles.listElement}*/}
+          {/*  left={() => creditCardIcon}*/}
+          {/*/>*/}
           <List.Item
-            title={this.props.cardNumber}
-            style={styles.listElement}
-            left={() => creditCardIcon}
-          />
-          <List.Item
-            title={"John Smith"}
+            title={"Benoît Jeaurond"}
             style={styles.listElement}
             left={() => timeWhiteIcon}
           />
@@ -214,7 +223,9 @@ const styles = StyleSheet.create({
   },
   listElement: {
     paddingTop: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
+    width: "100%",
+    flex: 1
   },
   description: {
     color: 'black',
