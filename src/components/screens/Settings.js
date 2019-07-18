@@ -1,10 +1,21 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import {Button, Headline, Title, List, Text} from 'react-native-paper';
+import { Headline, Title, List, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { CustomTabs } from 'react-native-custom-tabs';
 
 class Settings extends React.PureComponent {
+
+  openLink = (url) => {
+    CustomTabs.openURL(url, {
+      enableUrlBarHiding: true,
+      showPageTitle: true,
+      enableDefaultShare: true,
+      forceCloseOnRedirection: true,
+    });
+  }
+
   render() {
 
     const arrowIcon = <View style={{justifyContent: 'center'}}>
@@ -47,6 +58,7 @@ class Settings extends React.PureComponent {
             title="Foire de questions (FAQ)"
             titleStyle={styles.optionStyle}
             right={() => arrowIcon}
+            onPress={() => this.openLink("https://github.com/BenJeau/SEG3525-ProjetUI/wiki/Foire-de-questions-(FAQ)")}
           />
           <List.Item
             title="Déconnexion"
@@ -57,9 +69,16 @@ class Settings extends React.PureComponent {
         </View>
 
         <View style={styles.bottomIndications}>
-          <Text style={styles.bottomText}>
-              Politique de confidentialité | Conditions d'utilisation
-          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity onPress={() => this.openLink("https://github.com/BenJeau/SEG3525-ProjetUI/wiki/Politique-de-confidentialit%C3%A9")}>
+              <Text>Politique de confidentialité</Text>
+            </TouchableOpacity>
+            <Text> | </Text>
+
+            <TouchableOpacity onPress={() => this.openLink("https://github.com/BenJeau/SEG3525-ProjetUI/wiki/Conditions-d'utilisation")}>
+              <Text>Conditions d'utilisation</Text>
+            </TouchableOpacity>
+          </View>
 
           <Text style={styles.boldBottomText}>Version 0.1</Text>
         </View>
