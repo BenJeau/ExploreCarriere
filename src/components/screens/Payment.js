@@ -24,6 +24,14 @@ const radioButtonTheme = {
 }
 
 class Payment extends React.PureComponent {
+
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: '#ffffffd0',
+      marginTop: getStatusBarHeight()
+    }
+  }
+
   constructor(props) {
     super(props);
 
