@@ -6,6 +6,8 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Header } from 'react-navigation';
 import Touchable from 'react-native-platform-touchable';
 import { CustomTabs } from 'react-native-custom-tabs';
+import { bindActionCreators } from 'redux';
+import { setPaymentType, setPaymentName, setPaymentNumber, setPaymentCVV, setPaymentMonth, setPaymentYear } from '../../redux/actions';
 
 const textInputTheme = {
   colors: { 
@@ -26,7 +28,7 @@ class Payment extends React.PureComponent {
     super(props);
 
     this.state = {
-      paymentState: 'first',
+      paymentState: 'credit',
     };
   }
 
@@ -43,10 +45,10 @@ class Payment extends React.PureComponent {
     let isfilled = true;
     let variables = [];
 
-    if (this.state.paymentState == 'second') {
+    if (this.state.paymentState == 'debit') {
       variables.push('nomComplet')
       variables.push('numCarte')
-    } else if (this.state.paymentState == 'first') {
+    } else if (this.state.paymentState == 'credit') {
       variables.push('nomComplet')
       variables.push('numCarte')
       variables.push('cvv')
@@ -60,6 +62,19 @@ class Payment extends React.PureComponent {
 		});*/
 
     if (isfilled) {
+      this.props.setPaymentType(this.state.paymentState);
+
+      if (this.state.paymentState !== "paypal") {
+        this.props.setPaymentName(this.state.nomComplet);
+        this.props.setPaymentNumber(this.state.numCarte);
+        this.props.setPaymentMonth(this.state.month);
+        this.props.setPaymentYear(this.state.year);
+
+        if (this.state.paymentState === "credit") {
+          this.props.setPaymentCVV(this.state.cvv);
+        }
+      }
+
       this.props.navigation.navigate("Summary");
     }
   }
@@ -88,7 +103,7 @@ class Payment extends React.PureComponent {
       </View>
     );
 
-    if (paymentState === "first") {
+    if (paymentState === "credit") {
       CVV = (
         <View>
           <TextInput theme={textInputTheme}
@@ -108,7 +123,7 @@ class Payment extends React.PureComponent {
       )
     }
 
-    if (paymentState != 'third') {
+    if (paymentState != 'paypal') {
       paiementContent = (
         <View>
           <Text style={styles.title}>Information de paiement</Text>
@@ -183,28 +198,28 @@ class Payment extends React.PureComponent {
                   onValueChange={paymentState => this.setState({ paymentState })}
                   value={paymentState}>
                   <View style={styles.radio}>
-                    <RadioButton value="first"
+                    <RadioButton value="credit"
                       theme={radioButtonTheme}/>
 
-                    <TouchableOpacity onPress={() => this.setState({ paymentState: "first" })}>
+                    <TouchableOpacity onPress={() => this.setState({ paymentState: "credit" })}>
                       <Text style={styles.radioText}>Crédit</Text>
                     </TouchableOpacity>
                   </View>
 
                   <View style={styles.radio}>
-                    <RadioButton value="second"
+                    <RadioButton value="debit"
                       theme={radioButtonTheme} />
 
-                    <TouchableOpacity onPress={() => this.setState({ paymentState: "second" })}>
+                    <TouchableOpacity onPress={() => this.setState({ paymentState: "debit" })}>
                       <Text style={styles.radioText}>Débit</Text>
                     </TouchableOpacity>
                   </View>
 
                   <View style={styles.radio}>
-                    <RadioButton value="third"
+                    <RadioButton value="paypal"
                       theme={radioButtonTheme} />
 
-                    <TouchableOpacity onPress={() => this.setState({ paymentState: "third" })}>
+                    <TouchableOpacity onPress={() => this.setState({ paymentState: "paypal" })}>
                       <Text style={styles.radioText}>PayPal</Text>
                     </TouchableOpacity>
                   </View>
@@ -229,13 +244,17 @@ class Payment extends React.PureComponent {
   }
 }
 
+const mapDispatch = dispatch => {
+	return bindActionCreators({ setPaymentType, setPaymentName, setPaymentNumber, setPaymentCVV, setPaymentMonth, setPaymentYear }, dispatch);
+};
+
 const mapState = state => {
   return {
     items: state.UserReducer.items
   };
 };
 
-export default connect(mapState)(Payment);
+export default connect(mapState, mapDispatch)(Payment);
 
 const styles = StyleSheet.create({
   container: {

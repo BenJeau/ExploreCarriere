@@ -5,6 +5,8 @@ import availabilities from '../../data/availabilities';
 import Availability from '../Availability';
 import { Header } from 'react-navigation';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { bindActionCreators } from 'redux';
+import { setAvailability } from '../../redux/actions';
 
 class Availabilities extends React.PureComponent {
 
@@ -19,10 +21,15 @@ class Availabilities extends React.PureComponent {
     StatusBar.setBackgroundColor("#ffffffd0");
   }
 
+  nextPage = (index) => {
+    console.log(index);
+    this.props.setAvailability(index);
+    this.props.navigation.navigate("Payment");
+  }
+
   render() {
     return (
       <View style={styles.container}>
-
         <ScrollView>
           <View style={styles.content}>
 
@@ -31,7 +38,7 @@ class Availabilities extends React.PureComponent {
               availabilities.map((i, key) => (
                 <Availability key={key}
                   {...i}
-                  onPress={() => this.props.navigation.navigate("Payment")} />
+                  onPress={() => this.nextPage(key)} />
               ))
             }
           </View>
@@ -41,7 +48,11 @@ class Availabilities extends React.PureComponent {
   }
 }
 
-export default connect()(Availabilities);
+const mapDispatch = dispatch => {
+	return bindActionCreators({ setAvailability }, dispatch);
+};
+
+export default connect(null, mapDispatch)(Availabilities);
 
 const styles = StyleSheet.create({
   container: {
