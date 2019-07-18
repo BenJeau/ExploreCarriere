@@ -385,10 +385,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     textTransform: 'uppercase',
-    borderRadius: 10
   },
   buttonContainer: {
-    marginVertical: 20
+    marginVertical: 20,
+    borderRadius: 10
   },
   subtitle: {
     marginBottom: 10
