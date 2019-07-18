@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text, KeyboardAvoidingView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, KeyboardAvoidingView, Image, AppState, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { RadioButton, TextInput, HelperText, Button } from 'react-native-paper';
+import { RadioButton, TextInput, HelperText, Button, Snackbar } from 'react-native-paper';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Header } from 'react-navigation';
 import Touchable from 'react-native-platform-touchable';
@@ -29,7 +29,22 @@ class Payment extends React.PureComponent {
 
     this.state = {
       paymentState: 'credit',
+      snackBarVisible: false
     };
+  }
+
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = nextAppState => {
+    if (nextAppState === 'active') {
+      this.setState({snackBarVisible: true})
+    }
   }
 
   openPayPal = () => {
@@ -80,7 +95,7 @@ class Payment extends React.PureComponent {
   }
 
   render() {
-    const { paymentState, nomComplet, cvv, numCarte, month, year } = this.state;
+    const { paymentState, nomComplet, cvv, numCarte, month, year, snackBarVisible } = this.state;
 
     let CVV = (<View />);
     let paiementContent = (
@@ -95,7 +110,7 @@ class Payment extends React.PureComponent {
 
                 <Image source={require("../../assets/paypal.png")} 
                   style={styles.payPalIcon} />
-                <Text>Procéder avec PayPal</Text>
+                <Text style={styles.payPalText}>Procéder avec PayPal</Text>
               </View>
             </Touchable>
           </View>
@@ -239,6 +254,16 @@ class Payment extends React.PureComponent {
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
+
+        <Snackbar visible={snackBarVisible}
+          theme={radioButtonTheme}
+          onDismiss={() => this.setState({ snackBarVisible: false })}
+          action={{
+            label: 'Rejeter',
+            onPress: () => this.setState({ snackBarVisible: false }),
+          }}>
+          Authentifié avec PayPal
+        </Snackbar>
       </View>
     );
   }
@@ -333,5 +358,9 @@ const styles = StyleSheet.create({
     height: 30, 
     width: 30, 
     resizeMode: 'contain' 
+  },
+  payPalText: {
+    paddingLeft: 5,
+    color: "black"
   }
 });
