@@ -1,18 +1,34 @@
-# SEG3525 Projet UI
+# ExploreCarrière
 
 Explorer des carrières où vous pouvez visiter des équipes au sein d’organisations. Vous pouvez avoir pour but de simplement découvrir de nouvelles carrières en explorant les choix possibles, ou bien vouloir se renseigner au sujet d’une carrière spécifique.
-
-La maquette de l'application est disponible au lien https://xd.adobe.com/view/1c5eec2a-4ab2-4ebb-5447-358681147458-6a6f/.
 
 ## Équipe
 * Benoît Jeaurond
 * Zainab Al Showely
 * Sidiki Keita
 
+## Capture d'écrans
+La maquette de l'application est disponible au lien https://xd.adobe.com/view/1c5eec2a-4ab2-4ebb-5447-358681147458-6a6f/
+
+Voici les capture d'écran de l'application
+
+[![Welcome1](./screenshots/Welcome1.png)](./screenshots/Welcome1.jpg)
+[![Welcome2](./screenshots/Welcome2.png)](./screenshots/Welcome2.jpg)
+[![Login](./screenshots/Login.png)](./screenshots/Login.jpg)
+[![Signup](./screenshots/Signup.png)](./screenshots/Signup.jpg)
+[![Map](./screenshots/Map.png)](./screenshots/Map.jpg)
+[![AppliedJobs](./screenshots/AppliedJobs.png)](./screenshots/AppliedJobs.jpg)
+[![AppliedJobsEmpty](./screenshots/AppliedJobsEmpty.png)](./screenshots/AppliedJobsEmpty.jpg)
+[![Settings](./screenshots/Settings.png)](./screenshots/Settings.jpg)
+[![JobInfo](./screenshots/JobInfo.png)](./screenshots/JobInfo.jpg)
+[![Availabilities](./screenshots/Availabilities.png)](./screenshots/Availabilities.jpg)
+[![Payment](./screenshots/Payment.png)](./screenshots/Payment.jpg)
+[![Summary](./screenshots/Summary.png)](./screenshots/Summary.jpg)
+
 ## Dépendances
 Tous les dépendances de `React Native CLI`, les instructions sont disponibles [ici](https://facebook.github.io/react-native/docs/getting-started) sous l'onglet `React Native CLI Quickstart`.
 
-Vous pouvez installer `Yarn` aussi pour faciliter le développement en suivant les instructions [ici](https://yarnpkg.com/en/docs/install). Ceci est une amélioration de npm et peut être utiliser en place de npm.
+Vous pouvez installer `Yarn` aussi pour faciliter le développement en suivant les instructions [ici](https://yarnpkg.com/en/docs/install). Ceci est une amélioration de npm et peut être utiliser en place de npm. Celui-ci est considérablement plus rapide et permet de simplifier plusieurs commandes npm.
 
 ## Structure de fichiers
 
@@ -34,42 +50,6 @@ Tout le code important pour nous se retrouve dans le dossier `src` et dans le fi
     * Accomplie les opérations des actions sur la base de donnée
   * `store`
     * Contient la spécification de la base de donnée
-
-## Création de components
-
-Voici un example de component pour un écran à sa base
-
-``` javascript
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import { connect } from 'react-redux';
-
-class App extends React.PureComponent {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-      </View>
-    );
-  }
-}
-
-export default connect()(App);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
-```
 
 ## Notes
 

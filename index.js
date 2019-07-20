@@ -1,16 +1,17 @@
 import { AppRegistry, StatusBar } from 'react-native';
-import { AppliedJobs, Availabilities, JobDetail, Login, Payment, Search, Settings, Signup, Summary, Welcome } from './src/components/screens';
-import { name as appName } from './app.json';
 import { Provider } from 'react-redux';
 import * as React from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './src/redux/store/index';
 import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { AppliedJobs, Availabilities, JobDetail, Login, Payment, Search, Settings, Signup, Summary, Welcome } from './src/components/screens';
+import { store, persistor } from './src/redux/store/index';
+import { name as appName } from './app.json';
 
+// Le thème de react-native-paper
 const theme = {
 	...DefaultTheme,
 	colors: {
@@ -20,11 +21,14 @@ const theme = {
 	}
 };
 
+// Change la barre d'état de couleur
 StatusBar.setBackgroundColor('#ffffff00');
 StatusBar.setTranslucent(true);
 StatusBar.setBarStyle('dark-content');
 
-
+/**
+ * Le navigateur responsable pour le menu en bas une fois authentifié à l'application
+ */
 const DashboardNavigator = createMaterialBottomTabNavigator(
 	{
 		Search: {
@@ -54,7 +58,8 @@ const DashboardNavigator = createMaterialBottomTabNavigator(
 				),
 			},
 		}
-	}, {
+	}, 
+	{
 		initialRouteName: 'Search',
 		activeColor: '#232323',
 		inactiveColor: '#bbbbbb',
@@ -70,8 +75,9 @@ const DashboardNavigator = createMaterialBottomTabNavigator(
 	}
 );
 
-
-
+/**
+ * Le navigateur responsable lorsque l'utilisateur sélectionne un emplois sur la carte
+ */
 const JobNavigator = createStackNavigator(
 	{	
 		DashboardNavigator,
@@ -110,12 +116,14 @@ const JobNavigator = createStackNavigator(
 				shadowOpacity: 0,
 				borderBottomWidth: 0,
 				marginTop: getStatusBarHeight(),
-				// backgroundColor: '#ffffffd0'
 			}
 		}
 	}
 )
 
+/**
+ * Le navigateur responsable pour l'authentification
+ */
 const LoginNavigator = createStackNavigator(
 	{
 		Login: {
@@ -144,32 +152,15 @@ const LoginNavigator = createStackNavigator(
 	}
 );
 
+/**
+ * Rassemble tout les navigateurs, pour être capable de changer entre eux
+ */
 const MainNavigator = createSwitchNavigator(
 	{
-		Welcome: {
-			screen: Welcome,
-			navigationOptions: {
-				// header: null
-			},
-		},
-		DashboardNavigator: {
-			screen: DashboardNavigator,
-			navigationOptions: {
-				// header: null
-			},
-		},
-		LoginNavigator: {
-			screen: LoginNavigator,
-			navigationOptions: {
-				// header: null
-			},
-		},
-		JobNavigator: {
-			screen: JobNavigator,
-			navigationOptions: {
-				// header: null
-			},
-		}
+		Welcome,
+		DashboardNavigator,
+		LoginNavigator,
+		JobNavigator
 	},
 	{
 		initialRouteName: 'Welcome',
