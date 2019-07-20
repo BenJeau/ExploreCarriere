@@ -10,7 +10,7 @@ Explorer des carrières où vous pouvez visiter des équipes au sein d’organis
 ## Capture d'écrans
 La maquette de l'application est disponible au lien https://xd.adobe.com/view/1c5eec2a-4ab2-4ebb-5447-358681147458-6a6f/
 
-Voici les capture d'écran de l'application
+Voici les captures d'écrans de l'application
 
 [![Welcome1](./screenshots/Welcome1.png)](./screenshots/Welcome1.jpg)
 [![Welcome2](./screenshots/Welcome2.png)](./screenshots/Welcome2.jpg)
@@ -102,6 +102,7 @@ https://github.com/react-native-community/react-native-linear-gradient
 
 Maps
 https://github.com/react-native-community/react-native-maps
+https://github.com/react-native-community/react-native-geolocation
 
 Easy Modals/Popups
 https://github.com/react-native-community/react-native-modal
@@ -115,12 +116,19 @@ https://github.com/react-native-community/react-native-platform-touchable
 Client side database
 https://github.com/reduxjs/redux
 https://github.com/reduxjs/react-redux
+https://github.com/LogRocket/redux-logger
 
 Persists database
 https://github.com/rt2zz/redux-persist
 
 Database logger
 https://github.com/LogRocket/redux-logger
+
+Datetime picker
+https://github.com/mmazzarolo/react-native-modal-datetime-picker
+
+Touchable
+https://github.com/react-native-community/react-native-platform-touchable
 
 Storage
 https://github.com/react-native-community/async-storage
