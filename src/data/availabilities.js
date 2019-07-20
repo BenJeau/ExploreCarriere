@@ -1,3 +1,8 @@
+/**
+ * Fichier contenant les disponibilités pour les emplois, nous
+ * avons considéré que tous les emplois on les mêmes disponibilités 
+ * pour simplifier le développement
+ */
 export default [
     {   
         date: "16 au 19 juin 2019",

@@ -8,10 +8,12 @@ const loggerMiddleware = createLogger({
 	collapsed: true
 });
 
+// Ajoute redux-logger à Redux (pour être capable de facilement voir les actions et l'état de Redux)
 const createStoreWithMiddleware = applyMiddleware(
-	loggerMiddleware,  // redux-logger
+	loggerMiddleware,
 )(createStore);
 
+// Sauve l'information de Redux dans la mémoire de l'appareil (persiste l'information)
 const persistConfig = {
 	key: 'root',
 	storage: AsyncStorage,
@@ -19,5 +21,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+// Crée l'état de Redux et sont persistor
 export const store = createStoreWithMiddleware(persistedReducer);
 export const persistor = persistStore(store);

@@ -1,3 +1,6 @@
+// Les constantes utilisé entre le fichier de réduceur 
+// et d'actions pour être consistant avec le nom des actions
+
 export const SET_PAYMENT_TYPE = "SET_PAYMENT_TYPE";
 export const SET_PAYMENT_NAME = "SET_PAYMENT_NAME";
 export const SET_PAYMENT_NUMBER = "SET_PAYMENT_NUMBER";

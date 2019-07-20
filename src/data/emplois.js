@@ -1,3 +1,8 @@
+/**
+ * Fichier contenant l'information à propos des emplois, ce qui 
+ * est utilisé pour les points sur la carte et n'importe où nous 
+ * montrons de l'information par rapport à un emploi
+ */
 export default [
     {   
         id: 1,
