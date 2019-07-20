@@ -31,20 +31,25 @@ class Summary extends React.PureComponent {
     StatusBar.setBackgroundColor("#ffffffd0");
   }
 
+  // Rétroaction après avoir confirmé la commande
   feedback() {
     this.setState({visible: true});
     StatusBar.setBackgroundColor("#00000000")
   }
 
+  // Met à jour le store et passe
+  // au prochain écran
   nextScreen = () => {
     this.props.addAppliedJob({
       jobId: this.props.jobId,
       selectedAvailability: this.props.selectedAvailability,
     });
     this.props.navigation.navigate("DashboardNavigator");
-  }
+  };
 
   render() {
+    // On accède d'abord à toutes les informations
+    // nécessaires
     let jobId = this.props.jobId;
     let selectedJobInfo = jobInfo.find(item => item.id === jobId);
     let availability = availabilities[this.props.selectedAvailability];
@@ -52,6 +57,7 @@ class Summary extends React.PureComponent {
     let selectedDuration = availability.weekdays;
     let cost = availability.numberOfDays*selectedJobInfo.cost;
 
+    // On déclare toutes les icones nécessaires
     const locationIcon = <Icon name="location-on" size={30} color="black" />;
     const dateIcon = <Icon name="date-range" size={30} color="black" />;
     const timeIcon = <Icon name="access-time" size={30} color="black" />;
@@ -59,6 +65,9 @@ class Summary extends React.PureComponent {
     const moneyIcon = <Icon name="attach-money" size={30} color="black" />;
     const creditCardIcon = <Icon name="credit-card" size={30} color="black" />;
 
+    // Affiche les options nécessaires pour
+    // l'option de paiement précedemment
+    // sélectionnées
     const paymentInfo = () => {
       if (this.props.paymentType === 'paypal') {
         return (
@@ -87,11 +96,6 @@ class Summary extends React.PureComponent {
             {creditCardIcon}
             {creditCard}
           </View>
-          {/*<List.Item*/}
-          {/*  title={creditCard}*/}
-          {/*  style={styles.listElement}*/}
-          {/*  left={() => creditCardIcon}*/}
-          {/*/>*/}
           <List.Item
             title={"Benoît Jeaurond"}
             style={styles.listElement}
@@ -105,6 +109,10 @@ class Summary extends React.PureComponent {
       <View style={styles.container}>
         <Text style={styles.description}>Veuillez vérifier votre commande</Text>
         <Text style={styles.title}>Information de l'emploi</Text>
+
+        { // Affiche l'image de la compagnie
+          // avec un dégradé
+        }
         <LinearGradient
           colors={['rgba(255,255,255,0)', '#000000']}
           style={styles.companyBanner}>
@@ -116,6 +124,9 @@ class Summary extends React.PureComponent {
           <Title style={styles.subtitleStyle}>{selectedJobInfo.companyTitle}</Title>
         </LinearGradient>
 
+        { // Affiche les informations relatives
+          // à la commande
+        }
         <View>
           <List.Item
             title={selectedJobInfo.humanReadableAddress}
@@ -141,8 +152,12 @@ class Summary extends React.PureComponent {
 
         <Text style={styles.title}>Informations de paiement</Text>
 
+        { // Affiche les options de paiement choisies
+        }
         {paymentInfo()}
 
+        { // Bouton pour passer à la prochaine étape
+        }
         <Button
           onPress={() => this.feedback()}
           style={styles.confirmButton}
@@ -152,6 +167,9 @@ class Summary extends React.PureComponent {
           Confirmer
         </Button>
 
+        { // Dialogue de rétroaction affiché
+          // après qu'on effectue une commande
+        }
         <Portal>
           <Dialog
             visible={this.state.visible}
@@ -174,6 +192,8 @@ class Summary extends React.PureComponent {
   }
 }
 
+// Permet à la classe d'accéder aux informations
+// du store
 let mapToState = (store) => {
   return {
     jobId: store.UserReducer.jobId,
@@ -183,12 +203,15 @@ let mapToState = (store) => {
   }
 };
 
+// Permet à la classe d'effectuer l'action d'ajouter
+// un emploi à la liste des emplois appliqués au store
 const mapDispatch = dispatch => {
 	return bindActionCreators({ addAppliedJob }, dispatch);
 };
 
 export default connect(mapToState, mapDispatch)(Summary);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

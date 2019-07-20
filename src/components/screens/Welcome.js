@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+// contient le contenu de chacune des pages d'introduction
 const slides = [
   {
     key: 'prep',
@@ -29,6 +30,7 @@ const slides = [
 ];
 
 class Welcome extends React.PureComponent {
+  // Permet d'aller à la prochaine page
   _renderNextButton = () => {
     return (
       <View style={styles.buttonCircle}>
@@ -42,6 +44,7 @@ class Welcome extends React.PureComponent {
     );
   };
 
+  // Permet de passer à la prochaine étape
   _renderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>
@@ -55,6 +58,7 @@ class Welcome extends React.PureComponent {
     );
   };
 
+  // Formatte chacun des items
   _renderItem = (item) => {
     return (
       <View style={styles.slide}>
@@ -65,9 +69,10 @@ class Welcome extends React.PureComponent {
         </View>
       </View>
     );
-  }
+  };
 
   render() {
+    // Affiche le tout
     return (
       <AppIntroSlider slides={slides}
         renderItem={this._renderItem}
@@ -81,6 +86,7 @@ class Welcome extends React.PureComponent {
 
 export default connect()(Welcome);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   buttonCircle: {
     width: 48,

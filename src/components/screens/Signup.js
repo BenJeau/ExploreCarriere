@@ -8,6 +8,8 @@ import Touchable from 'react-native-platform-touchable';
 class Signup extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    // Permet la validation des entrées
     this.state =
       {
         hidePassword: true,
@@ -20,36 +22,43 @@ class Signup extends React.PureComponent {
         validPassword : false,
         validPasswordVerification : false,
         canProceed : false
-      }
+      };
 
     StatusBar.setBackgroundColor("#FFFFFFD0");
   }
 
+  // Change la visibilté du mot de passe
   managePasswordVisibility = () => {
     this.setState({ hidePassword: !this.state.hidePassword });
   };
 
+  // Vérifie si l'on peut procéder à la prochaine étape
   updateCanProceed = () => {
     this.setState({canProceed: this.state.validName && this.state.validPassword
         && this.state.validPasswordVerification && this.state.validEmail});
-  }
+  };
 
+  // Vérifie si le nom est valide
   validateName = (name) => {
     this.setState({validName: name.length > 0, name: name}, this.updateCanProceed);
   };
 
+  // Vérifie si le mot de passe est valide
   validatePassword = (password) => {
     this.setState({validPassword: password.length > 5,
       validPasswordVerification : password === this.state.passwordVerification,
       password: password}, this.updateCanProceed);
   };
 
+  // Vérifie si la confirmation du mot de passe
+  // correspond au mot de passe précédemment entré
   validatePasswordVerification = (passwordVerification) => {
     this.setState({
       validPasswordVerification : passwordVerification === this.state.password,
       passwordVerification: passwordVerification}, this.updateCanProceed);
-  }
+  };
 
+  // Vérifie si le format du courriel est correct
   validateEmail = (email) => {
     this.setState({validEmail : /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email), email: email}, this.updateCanProceed);
   };
@@ -57,6 +66,8 @@ class Signup extends React.PureComponent {
   render() {
     return (
 
+      // Ajuste la vue afin que le clavier ne cache
+      // pas les champs d'entrée
       <ScrollView>
       <KeyboardAvoidingView  style={styles.container}keyboardVerticalOffset={100} behavior="padding" enabled>
 
@@ -67,6 +78,9 @@ class Signup extends React.PureComponent {
         <Title style={styles.subtitleStyle}>Votre nouvelle carrière, commence ici</Title>
 
         <View style={styles.scrollingView}>
+          { // Affiche l'entrée du nom
+            // et ses messages d'erreur
+          }
             <TextInput
               onSubmitEditing={() => { this.email.focus(); }}
               blurOnSubmit={false}
@@ -85,7 +99,9 @@ class Signup extends React.PureComponent {
             >Nom doit être non-vide
             </HelperText>
 
-
+          { // Affiche l'entrée du courriel
+            // et ses messages d'erreur
+          }
             <TextInput
               ref={(i) => this.email = i}
               onSubmitEditing={() => { this.password.focus(); }}
@@ -106,7 +122,10 @@ class Signup extends React.PureComponent {
             >Format invalide de courriel
             </HelperText>
 
-
+          { // Affiche l'entrée du mot de passe,
+            // ses messages d'erreur et l'option
+            // de changer la visibilité
+          }
             <View>
               <TextInput
                 ref={(i) => this.password = i}
@@ -134,6 +153,8 @@ class Signup extends React.PureComponent {
               </TouchableOpacity>
             </View>
             <View>
+              { // Affiche la vérification du mot de passe
+              }
               <TextInput
                 ref={(i) => this.passwordVerif = i}
                 returnKeyType = {'done'}
@@ -159,22 +180,22 @@ class Signup extends React.PureComponent {
             </View>
         </View>
 
+        { // Affiche le bouton pour procéder
+        }
         <View style={styles.buttonPanelView}>
 
+          <View style={[styles.signUpContainer, {elevation: this.state.canProceed ? 5 : 0}]}>
+            <Touchable style={[styles.signUp, {backgroundColor: this.state.canProceed ? "transparent" : "#00000010"}]}
+              disabled={!this.state.canProceed}
+              onPress={() => this.props.navigation.navigate("DashboardNavigator")}>
 
-        <View style={[styles.signUpContainer, {elevation: this.state.canProceed ? 5 : 0}]}>
+              <Text style={[styles.signUpText, {color: this.state.canProceed ? "white" : "#00000050"}]}>
 
-        <Touchable style={[styles.signUp, {backgroundColor: this.state.canProceed ? "transparent" : "#00000010"}]}
-          disabled={!this.state.canProceed}
-          onPress={() => this.props.navigation.navigate("DashboardNavigator")}>
+              Créer un compte
+              </Text>
 
-          <Text style={[styles.signUpText, {color: this.state.canProceed ? "white" : "#00000050"}]}>
-          
-          Créer un compte
-          </Text>
-
-        </Touchable>
-        </View>
+            </Touchable>
+          </View>
 
           <View style={styles.backgroundPane}/>
 
@@ -188,6 +209,7 @@ class Signup extends React.PureComponent {
 
 export default connect()(Signup);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

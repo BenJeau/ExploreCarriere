@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, Dimensions, Image } from 'react-native';
 import { Surface } from 'react-native-paper';
 
+// Décrit le format du custom component qui
+// montre un emploi auquel on a appliqué
 class AppliedJob extends React.PureComponent {
     render() {
         const { image, jobTitle, company, date } = this.props;
@@ -27,6 +29,7 @@ class AppliedJob extends React.PureComponent {
 
 export default AppliedJob;
 
+// Contient les styles du component
 const styles = StyleSheet.create({
     container: {
         flex: 1,

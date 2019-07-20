@@ -11,32 +11,36 @@ import { setPaymentType, setPaymentName, setPaymentNumber, setPaymentCVV, setPay
 
 var moment = require('moment');
 
+// Aide à styliser les entrées
 const textInputTheme = {
   colors: { 
     primary: "#1C88E5", 
     background: "#ffffff", 
     underlineColor: '#1C88E5' 
   }
-}
+};
 
 const radioButtonTheme = {
   colors: { 
     accent: "#1C88E5", 
   }
-}
+};
 
 class Payment extends React.PureComponent {
 
+  // Réduit les problèmes de display
   static navigationOptions = {
     headerStyle: {
       backgroundColor: '#ffffffd0',
       marginTop: getStatusBarHeight()
     }
-  }
+  };
 
   constructor(props) {
     super(props);
 
+    // Permet de déterminer
+    // ce qui est affiché
     this.state = {
       paymentState: 'credit',
       snackBarVisible: false
@@ -57,6 +61,8 @@ class Payment extends React.PureComponent {
     }
   }
 
+  // Ouvre une fenêtre externe afin
+  // de s'authentifier pour PayPal
   openPayPal = () => {
     CustomTabs.openURL('https://www.paypal.com/ca/signin', {
       enableUrlBarHiding: true,
@@ -66,6 +72,9 @@ class Payment extends React.PureComponent {
     });
   }
 
+  // Cette méthode vérifie le format de
+  // chacune des entrées afin de valider si
+  // l'on peut procéder ou non
   validate = () => {
     let isfilled = true;
     let variables = [];
@@ -124,6 +133,9 @@ class Payment extends React.PureComponent {
       }
 		});
 
+    // Si on peut procéder, on va alors sauvegarder
+    // dans le store toutes les informations de paiement
+    // entrées par l'utilisateur
     if (isfilled) {
       this.props.setPaymentType(this.state.paymentState);
 
@@ -138,14 +150,18 @@ class Payment extends React.PureComponent {
         }
       }
 
+      // on procède à la prochaine page
       this.props.navigation.navigate("Summary");
     }
-  }
+  };
 
   render() {
+    // On initialise toutes les variables nécessaires
     const { paymentState, nomComplet, cvv, numCarte, month, year, snackBarVisible } = this.state;
 
     let CVV = (<View />);
+    // Affichage pour le component relié
+    // à l'option PayPal
     let paiementContent = (
       <View style={styles.payPalContainer}>
         <Text>Veuillez vous authentifier avec PayPal pour compléter le paiement</Text>
@@ -166,6 +182,10 @@ class Payment extends React.PureComponent {
       </View>
     );
 
+    // Affichage du component spécifique à la
+    // carte de crédit, soit le CVV ( si ce code
+    // n'est pas exécuté on n'affiche qu'une vue
+    // vide
     if (paymentState === "credit") {
       CVV = (
         <View>
@@ -186,6 +206,8 @@ class Payment extends React.PureComponent {
       )
     }
 
+    // Affiche tout le contenu partagé par l'option
+    // de carte de crédit et de carte de débit
     if (paymentState !== 'paypal') {
       paiementContent = (
         <View>
@@ -193,19 +215,22 @@ class Payment extends React.PureComponent {
 
           <Text style={styles.subtitle}>Information générale</Text>
 
+          { // Entrée pour nom complet / message d'erreur
+          }
           <TextInput theme={textInputTheme}
             label='Nom complet'
             mode='outlined'
             style={styles.textInput}
             value={nomComplet}
             onChangeText={nomComplet => this.setState({ nomComplet })} />
-
           <HelperText
             type="error"
             visible={this.state.nomComplet === undefined || nomComplet == ''}>
             Votre nom est obligatoire
 					</HelperText>
 
+          { // Entrée pour numéro de carte / message d'erreur
+          }
           <TextInput theme={textInputTheme}
             label='Numéro de carte'
             mode='outlined'
@@ -220,10 +245,14 @@ class Payment extends React.PureComponent {
             Numéro de carte de 16 chiffres obligatoire
 					</HelperText>
 
+          { // Ajoute le contenu préderminé pour le CVV
+          }
           {CVV}
 
           <Text style={styles.subtitle}>Date d'expiration</Text>
 
+          { // Entrées pour la date d'expiration / message d'erreur
+          }
           <View style={styles.dateContainer}>
             <TextInput theme={textInputTheme}
               label='Mois'
@@ -252,6 +281,7 @@ class Payment extends React.PureComponent {
       )
     }
 
+    // On formatte par le retour l'entièreté de la page
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -263,6 +293,9 @@ class Payment extends React.PureComponent {
                 Méthode de paiement
 							</Text>
 
+              { // Montre tous les choix d'options de
+                // paiement via un radio group
+              }
               <View style={styles.radioContainer}>
                 <RadioButton.Group
                   onValueChange={paymentState => this.setState({ paymentState })}
@@ -296,8 +329,13 @@ class Payment extends React.PureComponent {
                 </RadioButton.Group>
               </View>
 
+              { // Ajoute le contenu determiné pour l'option de
+                // paiement choisie
+              }
               {paiementContent}
 
+              { // Bouton pour passer à la prochaine page
+              }
               <Button mode='contained'
                 style={styles.buttonContainer}
                 theme={textInputTheme}
@@ -310,6 +348,9 @@ class Payment extends React.PureComponent {
           </KeyboardAvoidingView>
         </ScrollView>
 
+        { // Rétroaction offerte après avoir sélectionné
+          // l'option d'authentification avec PayPal
+        }
         <Snackbar visible={snackBarVisible}
           theme={radioButtonTheme}
           onDismiss={() => this.setState({ snackBarVisible: false })}
@@ -324,10 +365,14 @@ class Payment extends React.PureComponent {
   }
 }
 
+// Permet à la classe de modifier les données
+// stockées dans le store via les fonctions set
 const mapDispatch = dispatch => {
 	return bindActionCreators({ setPaymentType, setPaymentName, setPaymentNumber, setPaymentCVV, setPaymentMonth, setPaymentYear }, dispatch);
 };
 
+// Permet à la classe d'accéder aux informations
+// stockées dans le store
 const mapState = state => {
   return {
     items: state.UserReducer.items
@@ -336,6 +381,7 @@ const mapState = state => {
 
 export default connect(mapState, mapDispatch)(Payment);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Button, IconButton, Surface } from 'react-native-paper';
 
+// Décrit le format du custom component pour
+// une plage de disponbilité
 class Availability extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -16,6 +18,8 @@ class Availability extends React.PureComponent {
     const { saved } = this.state;
 
     return (
+      // Affiche date et actions que l'on peut effectuer
+      // sur l'item
       <Surface style={styles.container}>
         <View style={styles.contentTop}>
           <View>
@@ -38,6 +42,7 @@ class Availability extends React.PureComponent {
 
 export default Availability;
 
+// Contient les styles du component
 const styles = StyleSheet.create({
   container: {
     flex: 1,

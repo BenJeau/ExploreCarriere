@@ -12,6 +12,9 @@ class AppliedJobs extends React.PureComponent {
   render() {
     let data = [];
 
+    // On load à partir de notre store les emplois,
+    // qu'on stocke dans la variable data d'où on
+    // reprend toutes les informations
     this.props.appliedJobs.forEach(i => {
       let emploi = {};
 
@@ -28,11 +31,12 @@ class AppliedJobs extends React.PureComponent {
       data.push(emploi);
     });
 
-    console.log(data);
-
     return (
       <View style={styles.container}>
         {
+          // On load l'ensemble des emplois à partir de data si != 0
+          // et on les formatte de facon appropriée à l'aide du
+          // custom component AppliedJob
           data.length !== 0 ? (
             <ScrollView style={styles.scrollContainer}>
               <View style={styles.content}>
@@ -46,12 +50,17 @@ class AppliedJobs extends React.PureComponent {
               </View>
             </ScrollView>
           ) : (
+            // Sinon, on affiche un message indiquant que l'utilisateur
+            // n'a pas encore postulé à un emploi
             <View style={styles.emptyContainer}>
               <Image source={require("../../assets/fogg-no-comments.png")} 
                 style={styles.emptyImage}/>
 
               <Text style={styles.emptyText}>Il ne semble pas que vous avez postulé à des emplois</Text>
 
+              {// Bouton pour rapidement aller à la recherche
+               // si on n'a pas postulé à d'emplois
+              }
               <Button mode="outlined" 
                 onPress={() => this.props.navigation.navigate("Search")}
                 theme={{colors: {accent: '#000000', primary: '#000000', border: '#000000'}}}>
@@ -65,14 +74,17 @@ class AppliedJobs extends React.PureComponent {
   }
 }
 
+// Connecte la variable props.appliedJobs
+// à celle du store dans UserReducer
 let mapState = store => {
   return {
     appliedJobs: store.UserReducer.appliedJobs
   }
-}
+};
 
 export default connect(mapState)(AppliedJobs);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

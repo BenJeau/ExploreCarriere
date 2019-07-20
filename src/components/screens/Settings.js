@@ -7,6 +7,7 @@ import { CustomTabs } from 'react-native-custom-tabs';
 
 class Settings extends React.PureComponent {
 
+  // Permet d'ouvrir une page externe
   openLink = (url) => {
     CustomTabs.openURL(url, {
       enableUrlBarHiding: true,
@@ -18,6 +19,7 @@ class Settings extends React.PureComponent {
 
   render() {
 
+    // Initialise les icones que l'on désire utiliser
     const arrowIcon = <View style={{justifyContent: 'center'}}>
       <Icon name="keyboard-arrow-right" size={30} color="black" />
     </View>;
@@ -27,6 +29,10 @@ class Settings extends React.PureComponent {
 
     return (
       <View style={styles.container}>
+
+        { // Affiche les messages d'acceuil et l'icone
+          // de profil de l'utilisateur
+        }
         <View style={styles.header}>
           <View style={styles.welcomeMessages}>
             <Headline style={styles.headlineStyling}>Bonjour</Headline>
@@ -38,6 +44,9 @@ class Settings extends React.PureComponent {
           </View>
         </View>
 
+        { // Affiche les diverses options de changement
+          // de paramètres et d'aide
+        }
         <View style={styles.optionsStyle}>
           <List.Item
             title="Modifier information"
@@ -68,6 +77,8 @@ class Settings extends React.PureComponent {
           />
         </View>
 
+        { // Liens externes pour en savoir plus sur l'application
+        }
         <View style={styles.bottomIndications}>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={() => this.openLink("https://github.com/BenJeau/SEG3525-ProjetUI/wiki/Politique-de-confidentialit%C3%A9")}>
@@ -89,6 +100,7 @@ class Settings extends React.PureComponent {
 
 export default connect()(Settings);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

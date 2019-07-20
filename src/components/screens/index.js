@@ -1,3 +1,6 @@
+// Rend toutes ces pages accessibles
+// au fichier dans le directoire parent
+// index.js
 export { default as AppliedJobs } from './AppliedJobs';
 export { default as Availabilities } from './Availabilities';
 export { default as JobDetail } from './JobDetail';

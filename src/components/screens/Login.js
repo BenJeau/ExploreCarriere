@@ -7,6 +7,11 @@ import Touchable from 'react-native-platform-touchable';
 class Login extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    // On utilise ces variables d'état
+    // pour faire la validation de données
+    // et restreindre l'accès à la prochaine
+    // page
     this.state =
       {
         hidePassword: true,
@@ -18,24 +23,32 @@ class Login extends React.PureComponent {
       }
   }
 
+  // Modifie le paramètre de visibilité lorsque
+  // l'on clicke sur le bouton d'oeil du mot de
+  // passe
   managePasswordVisibility = () => {
     this.setState({ hidePassword: !this.state.hidePassword });
   };
 
+  // Vérifie si tous les champs sont bien remplis
   updateCanProceed = () => {
     this.setState({canProceed: this.state.validPassword && this.state.validEmail});
-  }
+  };
 
+  // Vérifie si le mot de passe est bien rempli
   validatePassword = (password) => {
     this.setState({validPassword: password.length > 5, password: password}, this.updateCanProceed);
   };
 
+  // Vérifie si le courriel est correctement formatté
   validateEmail = (email) => {
     this.setState({validEmail : /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email), email: email}, this.updateCanProceed);
   };
 
   render() {
     return (
+      // Cette vue nous permet de garder les champs de texte
+      // visibles lorsque l'on rentre de l'information
       <KeyboardAvoidingView  style={styles.container}keyboardVerticalOffset={100} behavior="height" enabled>
 
         <View style={{flex: 0.3, width: "100%", height: "100%", alignItems: 'center', justifyContent: 'center'}}>
@@ -50,54 +63,63 @@ class Login extends React.PureComponent {
 
         <View style={{flex: 0.3, width: "100%", height: "100%", alignItems: 'center', justifyContent: 'flex-end'}}>
 
+          { // Affiche le champ de texte de l'addresse courriel
+            // ainsi que l'erreur associé à celle-ci
+          }
           <View>
-
-          <TextInput
-              theme={{ colors: { primary: "#1C88E5",  background:"#ffffff", underlineColor:'#1C88E5'}}}
-              onSubmitEditing={() => { this.passwordInput.focus(); }}
-              blurOnSubmit={false}
-              style={styles.input}
-              label='Courriel'
-              keyboardType="email-address"
-              returnKeyType = {'next'}
-              mode='outlined'
-              value={this.state.email}
-              error={this.state.email &&!this.state.validEmail}
-              onChangeText={(input) => this.validateEmail(input)}
-          />
-          <HelperText
-            type="error"
-            visible={!this.state.validEmail && this.state.email.length !== 0}
-          >Format invalide de courriel
-          </HelperText>
+            <TextInput
+                theme={{ colors: { primary: "#1C88E5",  background:"#ffffff", underlineColor:'#1C88E5'}}}
+                onSubmitEditing={() => { this.passwordInput.focus(); }}
+                blurOnSubmit={false}
+                style={styles.input}
+                label='Courriel'
+                keyboardType="email-address"
+                returnKeyType = {'next'}
+                mode='outlined'
+                value={this.state.email}
+                error={this.state.email &&!this.state.validEmail}
+                onChangeText={(input) => this.validateEmail(input)}
+            />
+            <HelperText
+              type="error"
+              visible={!this.state.validEmail && this.state.email.length !== 0}
+            >Format invalide de courriel
+            </HelperText>
           </View>
-          <View>
-            
 
-          <TextInput
-              theme={{ colors: { primary: "#1C88E5", background:"#ffffff", underlineColor:'#1C88E5'}}}
-              style={styles.input}
-              ref={(i) => this.passwordInput = i}
-              returnKeyType = {'done'}
-              label='Mot de passe'
-              mode='outlined'
-              value={this.state.password}
-              secureTextEntry={this.state.hidePassword}
-              error={this.state.password && !this.state.validPassword}
-              onChangeText={(input) => this.validatePassword(input)}
-          />
-          <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = {this.managePasswordVisibility }>
-            <Image source = { ( this.state.hidePassword ) ? require('../../assets/hide.png') : require('../../assets/view.png') } style = { styles.btnImage } />
-          </TouchableOpacity>
-          <HelperText
-            type="error"
-            visible={!this.state.validPassword && this.state.password.length !== 0}
-          >
-            Doit contenir 6 caractères ou plus
-          </HelperText>
+          { // Affiche le champ de texte du mot de passe,
+            // l'erreur associé à celle-ci et le bouton
+            // pour changer l'état de visibilité du mot
+            // de passe
+          }
+          <View>
+            <TextInput
+                theme={{ colors: { primary: "#1C88E5", background:"#ffffff", underlineColor:'#1C88E5'}}}
+                style={styles.input}
+                ref={(i) => this.passwordInput = i}
+                returnKeyType = {'done'}
+                label='Mot de passe'
+                mode='outlined'
+                value={this.state.password}
+                secureTextEntry={this.state.hidePassword}
+                error={this.state.password && !this.state.validPassword}
+                onChangeText={(input) => this.validatePassword(input)}
+            />
+            <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = {this.managePasswordVisibility }>
+              <Image source = { ( this.state.hidePassword ) ? require('../../assets/hide.png') : require('../../assets/view.png') } style = { styles.btnImage } />
+            </TouchableOpacity>
+            <HelperText
+              type="error"
+              visible={!this.state.validPassword && this.state.password.length !== 0}
+            >
+              Doit contenir 6 caractères ou plus
+            </HelperText>
+          </View>
+
         </View>
-          </View>
 
+        { // Affiche le bouton pour procéder
+        }
         <View style={styles.buttonPanelView}>
           <View style={[styles.logInContainer, {elevation: this.state.canProceed ? 5 : 0}]}>
 
@@ -112,6 +134,9 @@ class Login extends React.PureComponent {
           </Touchable>
         </View>
 
+         { // Affiche le bouton pour créer un
+           // nouveau compte
+         }
         <View style={styles.signUpContainer}>
           <Touchable  style={styles.signUp}             
             onPress={() => this.props.navigation.navigate("Signup")}>
@@ -131,6 +156,7 @@ class Login extends React.PureComponent {
 
 export default connect()(Login);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

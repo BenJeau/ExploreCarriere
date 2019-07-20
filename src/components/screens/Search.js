@@ -15,6 +15,9 @@ import emplois from '../../data/emplois';
 var moment = require('moment');
 import 'moment/locale/fr';
 
+// Classe pour le custom component qui
+// est affiché lorsque l'on clique sur un
+// item sur la carte
 class Popover extends React.PureComponent {
     render() {
         const { jobTitle, companyTitle } = this.props;
@@ -33,6 +36,7 @@ class Search extends React.PureComponent {
 
         moment.locale('fr');
 
+        // Store les propriétés d'état
         this.state = {
             modalVisible: false,
             query: "",
@@ -44,6 +48,8 @@ class Search extends React.PureComponent {
         }
     }
 
+    // Ajuste la position de la carte à notre
+    // position courante
     componentDidMount() {
         this.props.navigation.addListener('willFocus', () => {
             StatusBar.setBackgroundColor("transparent");
@@ -57,23 +63,29 @@ class Search extends React.PureComponent {
             }, 300)), 10)
     }
 
+    // Montre le pop-up d'information sur un emploi
     showModal = () => {
         this.setState({ modalVisible: true });
         Keyboard.dismiss();
-    }
+    };
 
+    // Cache le pop-up d'information sur un emploi
     dismissModal = () => {
         this.setState({ modalVisible: false });
-    }
+    };
 
+    // Met à jour l'emploi sélectionné
+    // sur le store
     handleSetJob = (id) => {
         this.props.setJob(id);
-    }
+    };
 
+    // Cache la sélection de date
     hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisibleStart: false, isDateTimePickerVisibleEnd: false });
     };
 
+    // Sauvegarde la sélection de date
     handleDatePicked = date => {
         if (this.state.isDateTimePickerVisibleStart) {
             this.setState({ startDate: date });
@@ -83,24 +95,31 @@ class Search extends React.PureComponent {
         this.hideDateTimePicker();
     };
 
+    // Montre la sélection de date de fin
     showDateTimePickerEnd = () => {
         this.setState({ isDateTimePickerVisibleEnd: true })
-    }
+    };
 
+    // Montre la sélection de date de début
     showDateTimePickerStart = () => {
         this.setState({ isDateTimePickerVisibleStart: true })
-    }
+    };
 
+    // Formatte certains champs de texte
     // https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
     capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    };
 
     render() {
+        // Initialise variables nécessaires
         const { modalVisible, query, isDateTimePickerVisibleStart, isDateTimePickerVisibleEnd, startDate, endDate } = this.state;
 
         return (
             <View style={styles.container}>
+                { // Affiche l'élément MapView qui permet à l'utilisateur
+                  // de voir la carte native de son système
+                }
                 <MapView style={styles.container}
                     showsUserLocation
                     showsCompass={false}
@@ -113,6 +132,8 @@ class Search extends React.PureComponent {
                         longitudeDelta: 0.0021,
                     }}>
                     {
+                        // affiche l'ensemble des emplois
+                        // qui correspondent au critère de recherche
                         emplois.filter(i => {
                             return i.jobTitle.toLowerCase().includes(query.toLowerCase()) || i.companyTitle.toLowerCase().includes(query.toLowerCase())
                         }).map((marker, key) =>
@@ -127,6 +148,8 @@ class Search extends React.PureComponent {
                     }
                 </MapView>
 
+                { // Affiche le bouton d'accès aux filtres
+                }
                 <FAB style={styles.fab}
                     onPress={this.showModal}
                     icon={({ size, color }) => (
@@ -135,6 +158,10 @@ class Search extends React.PureComponent {
                             name="filter" />
                     )} />
 
+                { // Affiche la barre de recherche
+                  // et gère la mise à jour du critère
+                  // dans la variable d'état
+                }
                 <View style={styles.topSearch}>
                     <Touchable background={Touchable.Ripple('#90909040', false)}
                         onPress={() => this.searchInput.isFocused() ? this.searchInput.blur() : this.searchInput.focus()}>
@@ -152,6 +179,9 @@ class Search extends React.PureComponent {
                     </Touchable>
                 </View>
 
+                { // Ce component nous permet de créer la fenêtre de
+                  // filtres détaillés sans l'afficher immédiatement
+                }
                 <Portal>
                     <Dialog
                         visible={modalVisible}
@@ -159,6 +189,9 @@ class Search extends React.PureComponent {
                         <Dialog.Title style={{ color: '#c74b4b' }}>Filtrer les emplois</Dialog.Title>
 
                         <Dialog.Content>
+                            { // Sélectionne le domaine
+                              // auquel on s'intéresse
+                            }
                             <View style={styles.dialogSubSection}>
                                 <Text>Domaine</Text>
                                 <Picker selectedValue={this.state.field}
@@ -172,6 +205,9 @@ class Search extends React.PureComponent {
                                 </Picker>
                             </View>
 
+                            { // Sélectionne quelle est la durée
+                              // de stage désirée
+                            }
                             <View style={styles.dialogSubSection}>
                                 <Text>Durée</Text>
                                 <Picker selectedValue={this.state.jobLength}
@@ -185,6 +221,9 @@ class Search extends React.PureComponent {
                                 </Picker>
                             </View>
 
+                            { // Sélectionne la date de début et fin
+                              // auquel on s'intéresse
+                            }
                             <View style={styles.dates}>
                                 <Text>Dates</Text>
 
@@ -227,6 +266,9 @@ class Search extends React.PureComponent {
                                 </View>
                             </View>
                         </Dialog.Content>
+
+                        { // Affiche les options
+                        }
                         <Dialog.Actions>
                             <Button onPress={this.dismissModal} color="#808080">Annuler</Button>
                             <Button onPress={this.dismissModal}>Filtrer</Button>
@@ -246,6 +288,7 @@ class Search extends React.PureComponent {
 
 export default connect(null, { setJob })(Search);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -305,6 +348,8 @@ const styles = StyleSheet.create({
     }
 });
 
+// Contient la liste d'options incluses
+// dans l'option de filtrage
 const dropdownData = {
     field: [
         {

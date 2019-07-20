@@ -10,19 +10,21 @@ import {Header} from 'react-navigation';
 
 class JobDetail extends React.PureComponent {
 
+  // Réduit les problèmes
+  // de display sur les téléphones avec 'notch'
   static navigationOptions = {
     headerStyle: {
       backgroundColor: '#ffffffd0',
       marginTop: getStatusBarHeight()
     }
-  }
+  };
 
   render() {
+    // On charge l'emploi sélectionné à partir du store
     let jobId = this.props.jobId;
     let selectedJobInfo = jobInfo.find(item => item.id === jobId);
 
-    console.log(this.props);
-
+    // On charge les icônes que l'on désire utiliser
     const locationIcon = <Icon name="location-on" size={30} color="black" />;
     const dateIcon = <Icon name="date-range" size={30} color="black" />;
     const timeIcon = <Icon name="access-time" size={30} color="black" />;
@@ -32,7 +34,9 @@ class JobDetail extends React.PureComponent {
     return (
       <ScrollView>
       <View style={styles.container}>
-
+        { // Le LinearGradient stylize l'image retrouvée
+          // avec un dégradé foncé
+        }
           <LinearGradient
             colors={['rgba(255,255,255,0)', '#000000']}
             style={styles.companyBanner}>
@@ -44,6 +48,10 @@ class JobDetail extends React.PureComponent {
             <Title style={styles.subtitleStyle}>{selectedJobInfo.companyTitle}</Title>
           </LinearGradient>
 
+        { // On affiche les éléments d'information
+          // par rapport à l'emploi à l'aide du component
+          // List
+        }
           <View>
             <List.Item
               title={selectedJobInfo.humanReadableAddress}
@@ -77,6 +85,8 @@ class JobDetail extends React.PureComponent {
               </Text>
           </View>
 
+        { // On navigue à la prochaine page par le bouton
+        }
         <Button
           onPress={() => this.props.navigation.navigate("Availabilities")}
           style={styles.availabilitiesButton}
@@ -93,14 +103,19 @@ class JobDetail extends React.PureComponent {
   }
 }
 
+// Permet à la classe d'accéder
+// au jobId, ce qui lui laisse donc
+// accéder à toutes les informations
+// d'emploi storées dans emplois.js
 let mapToState = (store) => {
   return {
     jobId: store.UserReducer.jobId
   }
-}
+};
 
 export default connect(mapToState)(JobDetail);
 
+// Contient les styles de page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
