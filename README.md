@@ -116,7 +116,6 @@ https://github.com/react-native-community/react-native-platform-touchable
 Client side database
 https://github.com/reduxjs/redux
 https://github.com/reduxjs/react-redux
-https://github.com/LogRocket/redux-logger
 
 Persists database
 https://github.com/rt2zz/redux-persist
